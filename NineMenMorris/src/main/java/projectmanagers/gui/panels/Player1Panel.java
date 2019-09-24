@@ -3,13 +3,16 @@ import main.java.projectmanagers.gui.components.Player1Pieces;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Player1Panel extends JPanel {
+    private ArrayList<Player1Pieces> pieces;
     public JLabel player1Txt;
-    private int turns = 9;
+    public static int turns = 9;
     private GridBagConstraints gbc;
 
     public Player1Panel () {
+        pieces = new ArrayList<>(turns);
         gbc = new GridBagConstraints();
         player1Txt = new JLabel("Player 1");
         buildPanel();
@@ -24,9 +27,18 @@ public class Player1Panel extends JPanel {
         trackTurns();
     }
     public void trackTurns () {
-        for (int i = 1; i <= turns; i++) {
-            gbc.gridy = i;
-            add(new Player1Pieces(), gbc);
+        for (int i = 0; i < turns; i++) {
+            gbc.gridy = i + 1;
+            pieces.add(new Player1Pieces());
+            add(pieces.get(i), gbc);
+        }
+    }
+    public void decrementTurns () {
+        if (turns != 0) {
+            turns--;
+            remove(pieces.get(turns));
+            trackTurns();
+            repaint();
         }
     }
 }
