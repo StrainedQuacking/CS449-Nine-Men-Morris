@@ -38,8 +38,8 @@ public class GameBoardGui extends JFrame {
         masterPanel.add(gamePanel, BorderLayout.CENTER);
         masterPanel.add(titlePanel, BorderLayout.NORTH);
         masterPanel.add(buttonPanel, BorderLayout.SOUTH);
-        masterPanel.add(player1Panel, BorderLayout.EAST);
-        masterPanel.add(player2Panel, BorderLayout.WEST);
+        masterPanel.add(player1Panel, BorderLayout.WEST);
+        masterPanel.add(player2Panel, BorderLayout.EAST);
         this.add(masterPanel);
     }
     public void buttonActions() {

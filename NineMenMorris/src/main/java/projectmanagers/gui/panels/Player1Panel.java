@@ -1,4 +1,5 @@
 package main.java.projectmanagers.gui.panels;
+import main.java.projectmanagers.gui.components.Player1Pieces;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +26,7 @@ public class Player1Panel extends JPanel {
     public void trackTurns () {
         for (int i = 1; i <= turns; i++) {
             gbc.gridy = i;
+            add(new Player1Pieces(), gbc);
         }
     }
 }
