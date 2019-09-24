@@ -43,23 +43,13 @@ public class GameBoardGui extends JFrame {
         this.add(masterPanel);
     }
     public void buttonActions() {
-        JButton one_play = new JButton("Single Player");
-        JButton two_play = new JButton("Two Player");
-        JButton reset_play = new JButton("Reset");
-        buttonPanel.add(one_play);
-        buttonPanel.add(two_play);
-        buttonPanel.add(reset_play);
-
-        one_play.addActionListener(e -> {
-            //onePlay();
-        });
-
-        two_play.addActionListener(e -> {
-            //twoPlay();
-        });
-        reset_play.addActionListener(e -> {
-            //reset();
-        });
+        JButton onePlay = new JButton("Single Player");
+        JButton twoPlay = new JButton("Two Player");
+        JButton resetPlay = new JButton("Reset");
+        buttonPanel.add(onePlay);
+        buttonPanel.add(twoPlay);
+        buttonPanel.add(resetPlay);
+        // TODO: ActionEventListeners
     }
     public static void start() {
         JFrame frame = new JFrame("CS 449 Project");
