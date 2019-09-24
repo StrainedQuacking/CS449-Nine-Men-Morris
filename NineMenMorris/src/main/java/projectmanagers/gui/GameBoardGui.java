@@ -24,7 +24,6 @@ public class GameBoardGui extends JFrame {
         player1Panel = new Player1Panel();
         player2Panel = new Player2Panel();
         buildBoard();
-        start();
     }
 
     public void buildBoard() {
