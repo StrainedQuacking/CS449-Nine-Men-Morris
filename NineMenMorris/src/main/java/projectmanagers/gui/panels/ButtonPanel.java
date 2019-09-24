@@ -1,4 +1,4 @@
-package main.java.projectmanagers.gui;
+package main.java.projectmanagers.gui.panels;
 
 import javax.swing.*;
 import java.awt.*;
