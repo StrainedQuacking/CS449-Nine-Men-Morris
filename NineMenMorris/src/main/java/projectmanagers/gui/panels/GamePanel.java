@@ -23,6 +23,8 @@ public class GamePanel extends JPanel {
     public GamePanel () {
         super();
         boardPieces = new ArrayList<>(24);
+        player1Pieces = new ArrayList<>(9);
+        player2Pieces = new ArrayList<>(9);
         buildArrays();
         buildBoard();
     }
@@ -35,8 +37,12 @@ public class GamePanel extends JPanel {
         drawBoardLines();
     }
     public void buildArrays (){
-        for (int i = 0; i < 24; i++)
-            boardPieces.add(new BoardPieces());
+        for (int i = 0; i < 7; i++){
+            for (int j = 0; j < 7; j++) {
+                if(Board.boardArray[i][j] == GameStatuses.ColorStatus.EMPTY)
+                    boardPieces.add(new BoardPieces(i, j));
+            }
+        }
         for (int i = 0; i < 9; i++)
         {
             player1Pieces.add(new Player1Pieces());

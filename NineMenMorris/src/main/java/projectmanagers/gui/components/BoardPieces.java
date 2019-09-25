@@ -9,11 +9,12 @@ import java.awt.event.MouseEvent;
 
 public class BoardPieces extends JButton {
 
-    private boolean mouseOver = false;
-    private boolean mousePressed = false;
-    private boolean mouseClicked = false;
+    private int cX, cY;
+    private boolean mouseOver, mouseClicked, mousePressed = false;
 
-    public BoardPieces() {
+    public BoardPieces(int x, int y) {
+        this.cX = x;
+        this.cY = y;
         //Mouse actions to make the circle have button attributes
         MouseAdapter mouseListener = new MouseAdapter() {
             @Override
@@ -50,6 +51,8 @@ public class BoardPieces extends JButton {
         addMouseListener(mouseListener);
         addMouseMotionListener(mouseListener);
     }
+    public int getXCoordinate () { return cX; }
+    public int getYCoordinate () { return cY; }
 
     private int getDiameter() {
         int diameter = Math.min(getWidth(), getHeight());
