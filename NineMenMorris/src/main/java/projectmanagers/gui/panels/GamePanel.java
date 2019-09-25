@@ -67,16 +67,12 @@ public class GamePanel extends JPanel {
                     else if ( (i == 5 || i == 6 || (i == 2 && j == 3) || (i == 4 && j != 3)))
                         add(new BoardLines(5), gbc);
                     gbc.fill = GridBagConstraints.VERTICAL;
-                    if ((j == 1 || j == 2) && i != 3)
+                    if ((j == 1 || j == 2) && i != 3 || (j == 4 && i == 3))
                         add(new BoardLines(0), gbc);
-                    else if (( j == 5 || j == 4) && i != 3)
+                    else if ((( j == 5 || j == 4) && i != 3) || (j == 2 && i == 3) )
                         add(new BoardLines(6), gbc);
                     else if ((j == 5 || j == 1) && i == 3)
                         add(new BoardLines(3), gbc);
-                    else if (j == 4 && i == 3)
-                        add(new BoardLines(0), gbc);
-                    else if (j == 2 && i == 3)
-                        add(new BoardLines(6), gbc);
                     add(new BoardLines(j), gbc);
                 }
             }
