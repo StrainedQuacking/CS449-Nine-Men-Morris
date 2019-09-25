@@ -2,21 +2,28 @@ package main.java.projectmanagers.gui.panels;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import main.java.projectmanagers.gui.components.BoardLines;
 import main.java.projectmanagers.gui.components.BoardPieces;
+import main.java.projectmanagers.gui.components.Player1Pieces;
+import main.java.projectmanagers.gui.components.Player2Pieces;
 import main.java.projectmanagers.logic.Board;
 import main.java.projectmanagers.logic.GameStatuses;
 
 public class GamePanel extends JPanel {
+    private int player1Count, player2Count = 8;
     private GridBagConstraints gbc;
     public static ArrayList<BoardPieces> boardPieces;
+    public static ArrayList<Player1Pieces> player1Pieces;
+    public static ArrayList<Player2Pieces> player2Pieces;
 
     public GamePanel () {
         super();
         boardPieces = new ArrayList<>(24);
-        buildArray();
+        buildArrays();
         buildBoard();
     }
     public void buildBoard () {
@@ -27,9 +34,14 @@ public class GamePanel extends JPanel {
         drawBoardPieces();
         drawBoardLines();
     }
-    public void buildArray (){
+    public void buildArrays (){
         for (int i = 0; i < 24; i++)
             boardPieces.add(new BoardPieces());
+        for (int i = 0; i < 9; i++)
+        {
+            player1Pieces.add(new Player1Pieces());
+            player2Pieces.add(new Player2Pieces());
+        }
     }
     public void drawBoardPieces () {
         int count = 0;
