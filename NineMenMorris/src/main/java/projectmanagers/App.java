@@ -1,9 +1,7 @@
 package main.java.projectmanagers;
 
 import main.java.projectmanagers.logic.*;
-
-
-import main.java.projectmanagers.gui.GameBoardGui;
+import main.java.projectmanagers.gui.*;
 
 /**
  * Hello world!
