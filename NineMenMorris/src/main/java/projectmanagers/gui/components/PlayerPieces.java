@@ -11,6 +11,8 @@ public class PlayerPieces extends JButton {
     //Potential to add draggable attributes
     private Color bg;
     private Color outline;
+    private int diameter = Math.min(getWidth() / 2, getHeight() / 2);
+
     public PlayerPieces(Color bg, Color outline) {
         super();
         this.bg = bg;
@@ -24,9 +26,11 @@ public class PlayerPieces extends JButton {
     {
         this.outline = outline;
     }
+    public void setDiameter(int size) {
+        diameter = size;
+    }
     @Override
     public void paintComponent(Graphics g) {
-        int diameter = 28;
         int radius = diameter/2;
         g.setColor(outline);
         g.drawOval(getWidth()/2 - radius, getHeight()/2 - radius, diameter, diameter);

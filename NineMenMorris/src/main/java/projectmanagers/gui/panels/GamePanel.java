@@ -27,7 +27,7 @@ public class GamePanel extends JPanel {
         remove(piece);
         gbc.gridx = piece.getXCoordinate(); gbc.gridy = piece.getYCoordinate();
         add(player1Pieces.get(player1Count), gbc);
-        player1Count -= 1;
+        player1Count--;
         revalidate();
         repaint();
         Board.boardArray[piece.getXCoordinate()][piece.getYCoordinate()] = GameStatuses.ColorStatus.BLACK;
@@ -60,7 +60,9 @@ public class GamePanel extends JPanel {
         for (int i = 0; i < 9; i++)
         {
             player1Pieces.add(new PlayerPieces(Color.red, Color.black));
+            player1Pieces.get(i).setDiameter(35);
             player2Pieces.add(new PlayerPieces(Color.blue, Color.black));
+            player2Pieces.get(i).setDiameter(35);
         }
     }
     public void drawBoardPieces () {

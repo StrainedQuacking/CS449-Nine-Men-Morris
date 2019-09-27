@@ -13,6 +13,7 @@ public class GameBoardGui extends JFrame {
     private Player1Panel player1Panel;
     private Player2Panel player2Panel;
     private boolean aTurn = true;
+    private boolean play = false;
 
     private int MAX_HEIGHT = 600;
     private int MAX_WIDTH = 800;
@@ -56,13 +57,20 @@ public class GameBoardGui extends JFrame {
         onePlay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                player1Panel.decrementTurns();
+                JOptionPane.showMessageDialog(null, "CPU doesn't exist...", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         });
         twoPlay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                player2Panel.decrementTurns();
+                JOptionPane.showMessageDialog(null, "START!");
+                play = true;
+            }
+        });
+        resetPlay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                JOptionPane.showMessageDialog(null, "Close the app to reset...");
             }
         });
     }
@@ -80,15 +88,16 @@ public class GameBoardGui extends JFrame {
             GamePanel.boardPieces.get(i).addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
-                    if(aTurn && player1Panel.hasTurn()) {
+                    if(play && aTurn && player1Panel.hasTurn()) {
                         gamePanel.addPlayer1Piece(GamePanel.boardPieces.get(temp));
                         player1Panel.decrementTurns();
+                        aTurn = !aTurn;
                     }
-                    else if (!aTurn && player2Panel.hasTurn()){
+                    else if (play && !aTurn && player2Panel.hasTurn()){
                         gamePanel.addPlayer2Piece(GamePanel.boardPieces.get(temp));
                         player2Panel.decrementTurns();
+                        aTurn = !aTurn;
                     }
-                    aTurn = !aTurn;
                 }
             });
         }

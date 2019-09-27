@@ -19,7 +19,7 @@ public class Player2Panel extends JPanel {
         buildPanel();
     }
     public void buildPanel () {
-        gbc.weighty = 0.1;   gbc.gridy = 0;   gbc.gridx = 0;
+        gbc.weighty = 1;    gbc.gridy = 0;   gbc.gridx = 0;
         setLayout(new GridBagLayout());
         setBackground(bgc);
         setPreferredSize(new Dimension(75,600));
@@ -31,6 +31,7 @@ public class Player2Panel extends JPanel {
         for (int i = 0; i <= turns; i++) {
             gbc.gridy = i + 1;
             pieces.add(new PlayerPieces(Color.blue, Color.black));
+            pieces.get(i).setDiameter(28);
             add(pieces.get(i), gbc);
         }
     }
