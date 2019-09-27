@@ -1,5 +1,7 @@
 package main.java.projectmanagers.gui.components;
 
+import main.java.projectmanagers.gui.panels.*;
+
 import javax.swing.*;
 import java.awt.Graphics;
 import java.awt.Color;
@@ -7,7 +9,7 @@ import java.awt.geom.Point2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class BoardPieces extends JButton {
+public class BoardPieces extends JButton{
 
     private int cX, cY;
     private boolean mouseOver, mouseClicked, mousePressed = false;
@@ -75,13 +77,8 @@ public class BoardPieces extends JButton {
             g.setColor(Color.black);
         //fill oval will change the color of the inside of the circle
         g.fillOval(getWidth() / 2 - radius, getHeight() / 2 - radius, diameter, diameter);
-        //Select a board position
-        if (mouseClicked && (g.getColor() == Color.black || g.getColor() == Color.darkGray)) {
-            g.setColor(Color.blue);
-            g.fillOval(getWidth() / 2 - radius, getHeight() / 2 - radius, diameter, diameter);
-        }
         //Highlight the current board selection
-        if (mouseOver && g.getColor() == Color.black)
+        if (mouseOver && g.getColor() == Color.black && (Player1Panel.hasTurn() || Player2Panel.hasTurn()))
             g.setColor(Color.yellow);
         else
             g.setColor(Color.black);

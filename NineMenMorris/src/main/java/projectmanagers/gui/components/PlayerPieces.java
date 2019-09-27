@@ -1,30 +1,36 @@
 package main.java.projectmanagers.gui.components;
 
-import javax.swing.JButton;
+import javax.swing.*;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Player1Pieces extends JButton {
+public class PlayerPieces extends JButton {
     //Potential to add draggable attributes
-
-    public Player1Pieces() {
+    private Color bg;
+    private Color outline;
+    public PlayerPieces(Color bg, Color outline) {
         super();
+        this.bg = bg;
+        this.outline = outline;
     }
-
-    private int getDiameter() {
-        int diameter = Math.min(getWidth(), getHeight());
-        return diameter;
+    public void setBg (Color bg)
+    {
+        this.bg = bg;
+    }
+    public void setOL (Color outline)
+    {
+        this.outline = outline;
     }
     @Override
     public void paintComponent(Graphics g) {
-        int diameter = getDiameter();
+        int diameter = 28;
         int radius = diameter/2;
-        g.setColor(Color.black);
+        g.setColor(outline);
         g.drawOval(getWidth()/2 - radius, getHeight()/2 - radius, diameter, diameter);
-        g.setColor(Color.red);
+        g.setColor(bg);
         g.fillOval(getWidth()/2 - radius, getHeight()/2 - radius, diameter, diameter);
     }
 }

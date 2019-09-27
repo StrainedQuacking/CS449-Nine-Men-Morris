@@ -2,23 +2,18 @@ package main.java.projectmanagers.gui.panels;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-import main.java.projectmanagers.gui.components.BoardLines;
-import main.java.projectmanagers.gui.components.BoardPieces;
-import main.java.projectmanagers.gui.components.Player1Pieces;
-import main.java.projectmanagers.gui.components.Player2Pieces;
+import main.java.projectmanagers.gui.components.*;
 import main.java.projectmanagers.logic.Board;
 import main.java.projectmanagers.logic.GameStatuses;
 
 public class GamePanel extends JPanel {
-    private int player1Count, player2Count = 8;
-    private GridBagConstraints gbc;
+    private int player1Count = 8;
+    private int player2Count = 8;
+    public GridBagConstraints gbc;
     public static ArrayList<BoardPieces> boardPieces;
-    public static ArrayList<Player1Pieces> player1Pieces;
-    public static ArrayList<Player2Pieces> player2Pieces;
+    public static ArrayList<PlayerPieces> player1Pieces;
+    public static ArrayList<PlayerPieces> player2Pieces;
 
     public GamePanel () {
         super();
@@ -28,6 +23,25 @@ public class GamePanel extends JPanel {
         buildArrays();
         buildBoard();
     }
+    public void addPlayer1Piece(BoardPieces piece){
+        remove(piece);
+        gbc.gridx = piece.getXCoordinate(); gbc.gridy = piece.getYCoordinate();
+        add(player1Pieces.get(player1Count), gbc);
+        player1Count -= 1;
+        revalidate();
+        repaint();
+        Board.boardArray[piece.getXCoordinate()][piece.getYCoordinate()] = GameStatuses.ColorStatus.BLACK;
+    }
+    public void addPlayer2Piece(BoardPieces piece){
+        remove(piece);
+        gbc.gridx = piece.getXCoordinate(); gbc.gridy = piece.getYCoordinate();
+        add(player2Pieces.get(player2Count), gbc);
+        player2Count--;
+        revalidate();
+        repaint();
+        Board.boardArray[piece.getXCoordinate()][piece.getYCoordinate()] = GameStatuses.ColorStatus.WHITE;
+    }
+
     public void buildBoard () {
         gbc = new GridBagConstraints();
         gbc.weighty = 0.1; gbc.weightx = 0.1;
@@ -45,8 +59,8 @@ public class GamePanel extends JPanel {
         }
         for (int i = 0; i < 9; i++)
         {
-            player1Pieces.add(new Player1Pieces());
-            player2Pieces.add(new Player2Pieces());
+            player1Pieces.add(new PlayerPieces(Color.red, Color.black));
+            player2Pieces.add(new PlayerPieces(Color.blue, Color.black));
         }
     }
     public void drawBoardPieces () {
@@ -57,6 +71,16 @@ public class GamePanel extends JPanel {
                     gbc.gridx = i; gbc.gridy = j;
                     add(boardPieces.get(count), gbc);
                     count++;
+                }
+                else if(Board.boardArray[i][j] == GameStatuses.ColorStatus.BLACK) {
+                    gbc.gridx = i; gbc.gridy = j;
+                    add(player1Pieces.get(1), gbc);
+                    player1Count--;
+                }
+                else if(Board.boardArray[i][j] == GameStatuses.ColorStatus.WHITE) {
+                    gbc.gridx = i; gbc.gridy = j;
+                    add(player2Pieces.get(1), gbc);
+                    player2Count--;
                 }
             }
         }
