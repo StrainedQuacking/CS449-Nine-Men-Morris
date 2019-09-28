@@ -20,22 +20,22 @@ public class BoardLines extends JComponent {
     @Override
     public void paintComponent (Graphics g) {
         switch(type) {
-            case(HORIZONTAL):
+            case (HORIZONTAL):
                 g.drawLine(0, getHeight() / 2, getWidth(), getHeight() / 2);
                 break;
-            case(VERTICAL):
+            case (VERTICAL):
                 g.drawLine(getWidth() / 2, 0, getWidth() / 2, getHeight());
                 break;
-            case(LEFT_HORIZONTAL):
+            case (LEFT_HORIZONTAL):
                 g.drawLine(getWidth() / 2, getHeight() / 2, getWidth(), getHeight() / 2);
                 break;
-            case(RIGHT_HORIZONTAL):
+            case (RIGHT_HORIZONTAL):
                 g.drawLine(0, getHeight() / 2, getWidth() / 2, getHeight() / 2);
                 break;
-            case(TOP_VERTICAL):
+            case (TOP_VERTICAL):
                 g.drawLine(getWidth() / 2, getHeight() / 2, getWidth() / 2, getHeight());
                 break;
-            case(BOTTOM_VERTICAL):
+            case (BOTTOM_VERTICAL):
                 g.drawLine(getWidth() / 2, 0, getWidth() / 2, getHeight() / 2);
                 break;
         }

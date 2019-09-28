@@ -1,4 +1,5 @@
 package main.java.projectmanagers.gui;
+import main.java.projectmanagers.gui.components.PlayerPieces;
 import main.java.projectmanagers.gui.panels.*;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ public class GameBoardGui extends JFrame {
     private Player1Panel player1Panel;
     private Player2Panel player2Panel;
     private boolean aTurn = true;
-    private boolean play = false;
+    private boolean twoPlayerGame = false;
 
     private int MAX_HEIGHT = 600;
     private int MAX_WIDTH = 800;
@@ -28,6 +29,7 @@ public class GameBoardGui extends JFrame {
         player2Panel = new Player2Panel();
         buildBoard();
         playPiece();
+        millRemovePiece();
     }
 
     public void buildBoard() {
@@ -64,7 +66,7 @@ public class GameBoardGui extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 JOptionPane.showMessageDialog(null, "START!");
-                play = true;
+                twoPlayerGame = true;
             }
         });
         resetPlay.addActionListener(new ActionListener() {
@@ -88,14 +90,29 @@ public class GameBoardGui extends JFrame {
             GamePanel.boardPieces.get(i).addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
-                    if(play && aTurn && player1Panel.hasTurn()) {
-                        gamePanel.addPlayer1Piece(GamePanel.boardPieces.get(temp));
-                        player1Panel.decrementTurns();
-                        aTurn = !aTurn;
+                    if(twoPlayerGame) {
+                        if (aTurn && player1Panel.hasTurn()) {
+                            gamePanel.addPlayer1Piece(GamePanel.boardPieces.get(temp));
+                            player1Panel.decrementTurns();
+                            aTurn = !aTurn;
+                        } else if (!aTurn && player2Panel.hasTurn()) {
+                            gamePanel.addPlayer2Piece(GamePanel.boardPieces.get(temp));
+                            player2Panel.decrementTurns();
+                            aTurn = !aTurn;
+                        }
                     }
-                    else if (play && !aTurn && player2Panel.hasTurn()){
-                        gamePanel.addPlayer2Piece(GamePanel.boardPieces.get(temp));
-                        player2Panel.decrementTurns();
+                }
+            });
+        }
+    }
+    public void millRemovePiece () {
+        for(int i = 0; i < GamePanel.player1Pieces.size(); i++) {
+            final int temp = i;
+            gamePanel.player1Pieces.get(i).addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    if(!player1Panel.hasTurn() && !player2Panel.hasTurn()) {
+                        gamePanel.millPlayer1Remove(gamePanel.player1Pieces.get(temp));
                         aTurn = !aTurn;
                     }
                 }
