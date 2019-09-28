@@ -10,13 +10,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class BoardPieces extends JButton{
-
-    private int cX, cY;
-    private boolean mouseOver, mouseClicked, mousePressed = false;
+    private int x, y;
+    private boolean mouseClicked = false, mouseOver = false, mousePressed = false;
+    public int diameter;
 
     public BoardPieces(int x, int y) {
-        this.cX = x;
-        this.cY = y;
+        this.x = x;
+        this.y = y;
         //Mouse actions to make the circle have button attributes
         MouseAdapter mouseListener = new MouseAdapter() {
             @Override
@@ -53,21 +53,21 @@ public class BoardPieces extends JButton{
         addMouseListener(mouseListener);
         addMouseMotionListener(mouseListener);
     }
-    public int getXCoordinate () { return cX; }
-    public int getYCoordinate () { return cY; }
-
+    public int getXCoordinate () { return x; }
+    public int getYCoordinate () { return y; }
+    public void setDiameter (int d) { diameter = d; }
     private int getDiameter() {
-        int diameter = Math.min(getWidth(), getHeight());
+        diameter = Math.min(getWidth(), getHeight());
         return diameter;
     }
     @Override
     public boolean contains (int x, int y) {
         int radius = getDiameter()/2;
-        return Point2D.distance(x, y, getWidth()/2, getHeight()/2) < radius;
+        return Point2D.distance(x, y, getWidth() / 2, getHeight() / 2) < radius;
     }
     @Override
     public void paintComponent(Graphics g) {
-        int diameter = getDiameter();
+        diameter = getDiameter();
         int radius = diameter/2;
 
         //Clickable display for current board position
@@ -83,7 +83,7 @@ public class BoardPieces extends JButton{
         else
             g.setColor(Color.black);
         //Draw oval only changes the outline of the circle
-        g.drawOval(getWidth() / 2 - radius, getHeight() / 2 - radius, diameter, diameter);
+        g.drawOval((getWidth() / 2) - radius, (getHeight() / 2) - radius, diameter, diameter);
         g.setColor(Color.black);
     }
 }
