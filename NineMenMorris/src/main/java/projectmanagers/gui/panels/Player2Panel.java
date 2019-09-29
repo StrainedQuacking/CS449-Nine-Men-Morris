@@ -31,7 +31,6 @@ public class Player2Panel extends JPanel {
         for (int i = 0; i <= turns; i++) {
             gbc.gridy = i + 1;
             pieces.add(new PlayerPieces(Color.blue, Color.black));
-            pieces.get(i).setDiameter(28);
             add(pieces.get(i), gbc);
         }
     }

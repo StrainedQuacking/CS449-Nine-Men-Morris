@@ -55,7 +55,6 @@ public class BoardPieces extends JButton{
     }
     public int getXCoordinate () { return x; }
     public int getYCoordinate () { return y; }
-    public void setDiameter (int d) { diameter = d; }
     private int getDiameter() {
         diameter = Math.min(getWidth(), getHeight());
         return diameter;

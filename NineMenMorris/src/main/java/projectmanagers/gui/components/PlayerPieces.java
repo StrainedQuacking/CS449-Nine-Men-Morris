@@ -65,8 +65,9 @@ public class PlayerPieces extends JButton {
     {
         this.outline = outline;
     }
-    public void setDiameter(int size) {
-        diameter = size;
+    private int getDiameter() {
+        diameter = Math.min(getWidth(), getHeight());
+        return diameter;
     }
     @Override
     public boolean contains (int x, int y) {
@@ -75,6 +76,7 @@ public class PlayerPieces extends JButton {
     }
     @Override
     public void paintComponent(Graphics g) {
+        diameter = getDiameter();
         int radius = diameter / 2;
         g.setColor(outline);
         g.drawOval((getWidth() / 2) - radius, (getHeight() / 2) - radius, diameter, diameter);

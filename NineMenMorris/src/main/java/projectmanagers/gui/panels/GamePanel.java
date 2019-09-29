@@ -8,8 +8,8 @@ import main.java.projectmanagers.logic.Board;
 import main.java.projectmanagers.logic.GameStatuses;
 
 public class GamePanel extends JPanel {
-    private int player1Count = 0;
-    private int player2Count = 0;
+    private int player1Count;
+    private int player2Count;
     public GridBagConstraints gbc;
     public static ArrayList<BoardPieces> boardPieces;
     public static ArrayList<PlayerPieces> player1Pieces;
@@ -20,16 +20,13 @@ public class GamePanel extends JPanel {
         boardPieces = new ArrayList<>(24);
         player1Pieces = new ArrayList<>(9);
         player2Pieces = new ArrayList<>(9);
-        buildArrays();
         buildBoard();
     }
     //TODO: Sprint Two mill and remove piece
     public void millPlayer1Remove(PlayerPieces piece){
         remove(piece);
         gbc.gridx = piece.getXCoordinate(); gbc.gridy = piece.getYCoordinate();
-        BoardPieces temp = new BoardPieces(piece.getXCoordinate(), piece.getYCoordinate());
-        temp.setDiameter(28);
-        add(temp, gbc);
+        add(new BoardPieces(piece.getXCoordinate(), piece.getYCoordinate()), gbc);
         player1Count--;
         revalidate();
         repaint();
@@ -37,12 +34,14 @@ public class GamePanel extends JPanel {
     public void millPlayer2Remove(PlayerPieces piece){
         remove(piece);
         gbc.gridx = piece.getXCoordinate(); gbc.gridy = piece.getYCoordinate();
-        BoardPieces temp = new BoardPieces(piece.getXCoordinate(), piece.getYCoordinate());
-        temp.setDiameter(28);
-        add(temp, gbc);
+        add(new BoardPieces(piece.getXCoordinate(), piece.getYCoordinate()), gbc);
         player2Count--;
         revalidate();
         repaint();
+    }
+    //TODO: Sprint two slide piece
+    public void slidePiece(PlayerPieces piece){
+
     }
     public void addPlayer1Piece(BoardPieces piece){
         remove(piece);
@@ -66,6 +65,7 @@ public class GamePanel extends JPanel {
     }
 
     public void buildBoard () {
+        buildArrays();
         gbc = new GridBagConstraints();
         gbc.weighty = 0.1; gbc.weightx = 0.1;
         setLayout(new GridBagLayout());
@@ -74,6 +74,11 @@ public class GamePanel extends JPanel {
         drawBoardLines();
     }
     public void buildArrays (){
+        boardPieces.clear();
+        player1Pieces.clear();
+        player2Pieces.clear();
+        player1Count = 0;
+        player2Count = 0;
         for (int i = 0; i < 7; i++){
             for (int j = 0; j < 7; j++) {
                 if(Board.boardArray[i][j] == GameStatuses.ColorStatus.EMPTY)
@@ -83,9 +88,7 @@ public class GamePanel extends JPanel {
         for (int i = 0; i < 9; i++)
         {
             player1Pieces.add(new PlayerPieces(Color.red, Color.black));
-            player1Pieces.get(i).setDiameter(30);
             player2Pieces.add(new PlayerPieces(Color.blue, Color.black));
-            player2Pieces.get(i).setDiameter(30);
         }
     }
     public void drawBoardPieces () {
@@ -134,5 +137,6 @@ public class GamePanel extends JPanel {
                 }
             }
         }
+        gbc.fill = GridBagConstraints.NONE;
     }
 }

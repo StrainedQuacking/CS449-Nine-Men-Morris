@@ -1,5 +1,4 @@
 package main.java.projectmanagers.gui;
-import main.java.projectmanagers.gui.components.PlayerPieces;
 import main.java.projectmanagers.gui.panels.*;
 
 import javax.swing.*;
@@ -14,6 +13,7 @@ public class GameBoardGui extends JFrame {
     private Player1Panel player1Panel;
     private Player2Panel player2Panel;
     private boolean aTurn = true;
+    private boolean isMill = false;
     private boolean twoPlayerGame = false;
 
     private int MAX_HEIGHT = 600;
@@ -29,7 +29,7 @@ public class GameBoardGui extends JFrame {
         player2Panel = new Player2Panel();
         buildBoard();
         playPiece();
-        millRemovePiece();
+        movePlayerPiece();
     }
 
     public void buildBoard() {
@@ -51,34 +51,29 @@ public class GameBoardGui extends JFrame {
     public void buttonActions() {
         JButton onePlay = new JButton("Single Player");
         JButton twoPlay = new JButton("Two Player");
-        JButton resetPlay = new JButton("Reset");
         buttonPanel.add(onePlay);
         buttonPanel.add(twoPlay);
-        buttonPanel.add(resetPlay);
         // TODO: addActionListeners here are some examples
         onePlay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 JOptionPane.showMessageDialog(null, "CPU doesn't exist...", "ERROR", JOptionPane.ERROR_MESSAGE);
+                gamePanel.removeAll();
+                gamePanel.buildBoard();
             }
         });
         twoPlay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+
                 JOptionPane.showMessageDialog(null, "START!");
                 twoPlayerGame = true;
-            }
-        });
-        resetPlay.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                JOptionPane.showMessageDialog(null, "Close the app to reset...");
             }
         });
     }
     public static void start() {
         JFrame frame = new JFrame("CS 449 Project");
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setContentPane(new GameBoardGui().masterPanel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -105,14 +100,15 @@ public class GameBoardGui extends JFrame {
             });
         }
     }
-    public void millRemovePiece () {
+    public void movePlayerPiece () {
         for(int i = 0; i < GamePanel.player1Pieces.size(); i++) {
             final int temp = i;
             gamePanel.player1Pieces.get(i).addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
                     if(!player1Panel.hasTurn() && !player2Panel.hasTurn()) {
-                        gamePanel.millPlayer1Remove(gamePanel.player1Pieces.get(temp));
+                        if(isMill)
+                            gamePanel.millPlayer1Remove(gamePanel.player1Pieces.get(temp));
                         aTurn = !aTurn;
                     }
                 }
