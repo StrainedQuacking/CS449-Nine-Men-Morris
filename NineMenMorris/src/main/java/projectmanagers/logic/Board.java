@@ -7,7 +7,7 @@ import static main.java.projectmanagers.trackers.PlayerTracking.PLAYER_LOOKUP;
 
 public class Board {
 
-    static public ColorStatus[][] boardArray = new ColorStatus[7][7];
+    static private ColorStatus[][] boardArray = new ColorStatus[7][7];
     static public ColorStatus[][] boardMills = new ColorStatus[16][3];
 
     public Board() {
