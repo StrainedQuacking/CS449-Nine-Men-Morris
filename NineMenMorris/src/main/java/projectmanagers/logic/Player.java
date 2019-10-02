@@ -35,4 +35,9 @@ public class Player {
     public void decrementPieces(){
         this.pieces--;
     }
+
+    public void setInitialVariables() {
+        this.pieces = 0;
+        this.turns = 8;
+    }
 }
