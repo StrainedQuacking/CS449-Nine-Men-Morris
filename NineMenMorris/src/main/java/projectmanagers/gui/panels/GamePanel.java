@@ -83,7 +83,7 @@ public class GamePanel extends JPanel {
         player2Pieces.clear();
         for (int i = 0; i < 7; i++){
             for (int j = 0; j < 7; j++) {
-                if(Board.boardArray[i][j] == EMPTY)
+                if(Board.position(i, j) == EMPTY)
                     boardPieces.add(new BoardPieces(i, j));
             }
         }
@@ -97,7 +97,7 @@ public class GamePanel extends JPanel {
         int count = 0;
         for (int i = 0; i < 7 ; i ++) {
             for (int j = 0; j < 7; j++) {
-                if(Board.boardArray[i][j] == EMPTY){
+                if(Board.position(i, j) == EMPTY){
                     gbc.gridx = i; gbc.gridy = j;
                     add(boardPieces.get(count), gbc);
                     count++;
@@ -108,7 +108,7 @@ public class GamePanel extends JPanel {
     public void drawBoardLines() {
         for (int i = 0; i < 7 ; i ++) {
             for (int j = 0; j < 7; j++) {
-                if(Board.boardArray[i][j] == INVALID){
+                if(Board.position(i, j) == INVALID){
                     gbc.gridx = i; gbc.gridy = j;
                     if ((j == 0 || j == 1 || j == 5 || j == 6) && (i != 0 && i != 6)) {
                         gbc.fill = GridBagConstraints.HORIZONTAL;

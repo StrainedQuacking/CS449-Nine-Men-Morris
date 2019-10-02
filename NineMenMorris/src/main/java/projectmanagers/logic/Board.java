@@ -10,7 +10,11 @@ public class Board {
     static public ColorStatus[][] boardArray = new ColorStatus[7][7];
     static public ColorStatus[][] boardMills = new ColorStatus[16][3];
 
-    static {
+    public Board() {
+        startingBoard();
+    }
+
+    static public void startingBoard() {
 
         //row,column
         boardArray[0][0] = EMPTY;
@@ -67,7 +71,7 @@ public class Board {
     }
 
     static public boolean remove(int row, int column) {
-        if (boardArray[row][column] != EMPTY) {
+        if (boardArray[row][column] != EMPTY && boardArray[row][column] != INVALID) {
             PLAYER_LOOKUP.get(boardArray[row][column]).decrementPieces();
             boardArray[row][column] = EMPTY;
             return true;
@@ -76,6 +80,9 @@ public class Board {
         }
     }
 
+    static public ColorStatus position(int row, int column){
+        return boardArray[row][column];
+    }
     static private void determineMills(){
         //TODO: Sprint 2
     }
