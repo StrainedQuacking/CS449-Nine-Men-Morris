@@ -13,7 +13,7 @@ public class MillConditionsTest {
     @Before
     public void setUp() {
         Board testBoard = new Board();
-        testBoard.startingBoard();
+        Board.startingBoard();
     }
 
     @Test

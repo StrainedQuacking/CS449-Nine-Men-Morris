@@ -7,13 +7,11 @@ import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.INVALID;
 
 public class Position {
     private ColorStatus colorStatus;
-    private boolean millStatus;
     private MillConditions millConditionsX;
     private MillConditions millConditionsY;
 
     public Position() {
         this.colorStatus = INVALID;
-        this.millStatus = false;
     }
 
     public boolean determineMills() {
@@ -40,10 +38,6 @@ public class Position {
 
     public void setStatus(ColorStatus colorStatus) {
         this.colorStatus = colorStatus;
-    }
-
-    public void setMill(boolean millStatus) {
-        this.millStatus = millStatus;
     }
 
     public boolean isMilled() {

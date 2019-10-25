@@ -90,4 +90,33 @@ public class BoardTest {
     public void remove_invalidSpace() {
         assertFalse(Board.remove(0, 1));
     }
+
+    @Test
+    public void determineMills_returnsTrueOnMill() {
+        assertFalse(Board.placePiece(BLUE_PLAYER, 0, 0));
+        assertFalse(Board.placePiece(BLUE_PLAYER, 0, 3));
+        assertTrue(Board.placePiece(BLUE_PLAYER, 0, 6));
+    }
+
+    @Test
+    public void isPositionMilled_returnsTrueOnMilledPieces() {
+        Board.placePiece(BLUE_PLAYER, 0, 0);
+        Board.placePiece(BLUE_PLAYER, 0, 3);
+        Board.placePiece(BLUE_PLAYER, 0, 6);
+
+        assertTrue(Board.isPositionMilled(0, 0));
+        assertTrue(Board.isPositionMilled(0, 3));
+        assertTrue(Board.isPositionMilled(0, 6));
+    }
+
+    @Test
+    public void isPositionMilled_updatesCorrectly() {
+        assertFalse(Board.isPositionMilled(0, 0));
+
+        Board.placePiece(BLUE_PLAYER, 0, 0);
+        Board.placePiece(BLUE_PLAYER, 0, 3);
+        Board.placePiece(BLUE_PLAYER, 0, 6);
+
+        assertFalse(Board.isPositionMilled(3, 0));
+    }
 }
