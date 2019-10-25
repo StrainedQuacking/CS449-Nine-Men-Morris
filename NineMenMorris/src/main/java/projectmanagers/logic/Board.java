@@ -84,11 +84,9 @@ public class Board {
         if ((boardArray.get(xpos).get(ypos).getStatus() == EMPTY) && (boardArray.get(xpos).get(ypos).getStatus() != INVALID)) {
             boardArray.get(xpos).get(ypos).setStatus(player.getColor());
             player.incrementPieces();
-            boardArray.get(xpos).get(ypos).determineMills();
-            return true;
-        } else {
-            return false;
+            return boardArray.get(xpos).get(ypos).determineMills();
         }
+        else return false;
     }
 
     static public boolean remove(int xpos, int ypos) {
