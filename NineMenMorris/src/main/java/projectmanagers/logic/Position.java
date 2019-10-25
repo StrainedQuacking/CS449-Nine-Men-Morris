@@ -16,17 +16,11 @@ public class Position {
         this.millStatus = false;
     }
 
-    public Position(ColorStatus colorStatus) {
-        this.colorStatus = colorStatus;
-        this.millStatus = false;
-    }
-
     public boolean determineMills() {
-        if (millConditionsX.isMilled()) {
-            return millConditionsY.determineMill();
-        } else {
-            return millConditionsX.determineMill();
-        }
+        boolean millY = millConditionsY.determineMill();
+        boolean millX = millConditionsX.determineMill();
+
+        return (millX || millY);
     }
 
     public void removePiece() {
@@ -53,6 +47,8 @@ public class Position {
     }
 
     public boolean isMilled() {
-        return millStatus;
+        boolean mill1 = millConditionsX.isMilled();
+        boolean mill2 = millConditionsY.isMilled();
+        return (mill1 || mill2);
     }
 }
