@@ -1,5 +1,7 @@
 package main.java.projectmanagers.logic;
 
+import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.EMPTY;
+
 public class MillConditions {
     private Integer x1, y1, x2, y2, x3, y3;
     private boolean milled;
@@ -17,15 +19,20 @@ public class MillConditions {
     boolean determineMill() {
         if (milled) {
             return false;
+        } else if (Board.position(x1, y1) == EMPTY || Board.position(x2, y2) == EMPTY || Board.position(x3, y3) == EMPTY) {
+            return false;
         }
 
         if ((Board.position(x1, y1) == Board.position(x2, y2)) && (Board.position(x2, y2) == Board.position(x3, y3))) {
             milled = true;
-            return true;
         } else {
             milled = false;
-            return false;
         }
+        return milled;
+    }
+
+    void unsetMillStatus() {
+        milled = false;
     }
 
     boolean isMilled() {
