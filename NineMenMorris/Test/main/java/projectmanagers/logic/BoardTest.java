@@ -19,53 +19,53 @@ public class BoardTest {
 
     @Test
     public void placePiece_redOnEmpty() {
-        assertTrue(Board.placePiece(RED_PLAYER, 0, 0));
+        assertTrue(Board.placePiece(0, 0));
         assertEquals(1, RED_PLAYER.getPieces());
         assertEquals(RED, Board.position(0,0));
     }
 
     @Test
     public void placePiece_redOnBlue() {
-        Board.placePiece(BLUE_PLAYER, 0, 0);
+        Board.placePiece( 0, 0);
 
-        assertFalse(Board.placePiece(RED_PLAYER, 0, 0));
+        assertFalse(Board.placePiece( 0, 0));
         assertEquals(0, RED_PLAYER.getPieces());
         assertEquals(BLUE, Board.position(0,0));
     }
 
     @Test
     public void placePiece_redOnInvalid() {
-        assertFalse(Board.placePiece(RED_PLAYER, 0, 1));
+        assertFalse(Board.placePiece( 0, 1));
 
         assertEquals(0, RED_PLAYER.getPieces());
     }
 
     @Test
     public void placePiece_blueOnEmpty() {
-        assertTrue(Board.placePiece(BLUE_PLAYER, 0, 0));
+        assertTrue(Board.placePiece( 0, 0));
         assertEquals(1, BLUE_PLAYER.getPieces());
         assertEquals(BLUE, Board.position(0,0));
     }
 
     @Test
     public void placePiece_blueOnRed() {
-        Board.placePiece(RED_PLAYER, 0, 0);
+        Board.placePiece( 0, 0);
 
-        assertFalse(Board.placePiece(BLUE_PLAYER, 0, 0));
+        assertFalse(Board.placePiece( 0, 0));
         assertEquals(0, BLUE_PLAYER.getPieces());
         assertEquals(RED, Board.position(0,0));
     }
 
     @Test
     public void placePiece_blueOnInvalid() {
-        assertFalse(Board.placePiece(BLUE_PLAYER, 0, 1));
+        assertFalse(Board.placePiece(0, 1));
 
         assertEquals(0, BLUE_PLAYER.getPieces());
     }
 
     @Test
     public void remove_redPiece() {
-        Board.placePiece(RED_PLAYER, 0, 0);
+        Board.placePiece(0, 0);
 
         assertTrue(Board.remove(0, 0));
 
@@ -74,7 +74,7 @@ public class BoardTest {
 
     @Test
     public void remove_bluePiece() {
-        Board.placePiece(BLUE_PLAYER, 0, 0);
+        Board.placePiece(0, 0);
 
         assertTrue(Board.remove(0, 0));
 
@@ -93,16 +93,16 @@ public class BoardTest {
 
     @Test
     public void determineMills_returnsTrueOnMill() {
-        assertFalse(Board.placePiece(BLUE_PLAYER, 0, 0));
-        assertFalse(Board.placePiece(BLUE_PLAYER, 0, 3));
-        assertTrue(Board.placePiece(BLUE_PLAYER, 0, 6));
+        assertFalse(Board.placePiece( 0, 0));
+        assertFalse(Board.placePiece(0, 3));
+        assertTrue(Board.placePiece( 0, 6));
     }
 
     @Test
     public void isPositionMilled_returnsTrueOnMilledPieces() {
-        Board.placePiece(BLUE_PLAYER, 0, 0);
-        Board.placePiece(BLUE_PLAYER, 0, 3);
-        Board.placePiece(BLUE_PLAYER, 0, 6);
+        Board.placePiece(0, 0);
+        Board.placePiece(0, 3);
+        Board.placePiece(0, 6);
 
         assertTrue(Board.isPositionMilled(0, 0));
         assertTrue(Board.isPositionMilled(0, 3));
@@ -113,9 +113,9 @@ public class BoardTest {
     public void isPositionMilled_updatesCorrectly() {
         assertFalse(Board.isPositionMilled(0, 0));
 
-        Board.placePiece(BLUE_PLAYER, 0, 0);
-        Board.placePiece(BLUE_PLAYER, 0, 3);
-        Board.placePiece(BLUE_PLAYER, 0, 6);
+        Board.placePiece(0, 0);
+        Board.placePiece(0, 3);
+        Board.placePiece(0, 6);
 
         assertFalse(Board.isPositionMilled(3, 0));
     }

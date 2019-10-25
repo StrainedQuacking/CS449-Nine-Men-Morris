@@ -8,7 +8,7 @@ import java.util.List;
 import static main.java.projectmanagers.logic.GameStatuses.ColorStatus;
 import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.EMPTY;
 import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.INVALID;
-import static main.java.projectmanagers.trackers.PlayerTracking.PLAYER_LOOKUP;
+import static main.java.projectmanagers.trackers.PlayerTracking.*;
 
 public class Board {
 
@@ -80,13 +80,23 @@ public class Board {
 
     }
 
-    static public boolean placePiece(Player player, int xpos, int ypos) {
-        if ((boardArray.get(xpos).get(ypos).getStatus() == EMPTY) && (boardArray.get(xpos).get(ypos).getStatus() != INVALID)) {
-            boardArray.get(xpos).get(ypos).setStatus(player.getColor());
-            player.incrementPieces();
-            return boardArray.get(xpos).get(ypos).determineMills();
+    static public boolean placePiece(int xpos, int ypos) {
+        if(GameStatuses.turn == GameStatuses.Turns.PLAYER1) {
+            if ((boardArray.get(xpos).get(ypos).getStatus() == EMPTY) && (boardArray.get(xpos).get(ypos).getStatus() != INVALID)) {
+                boardArray.get(xpos).get(ypos).setStatus(RED_PLAYER.getColor());
+                RED_PLAYER.incrementPieces();
+                return boardArray.get(xpos).get(ypos).determineMills();
+            }
+            else return false;
         }
-        else return false;
+        else {
+                if ((boardArray.get(xpos).get(ypos).getStatus() == EMPTY) && (boardArray.get(xpos).get(ypos).getStatus() != INVALID)) {
+                    boardArray.get(xpos).get(ypos).setStatus(BLUE_PLAYER.getColor());
+                    BLUE_PLAYER.incrementPieces();
+                    return boardArray.get(xpos).get(ypos).determineMills();
+                }
+                else return false;
+            }
     }
 
     static public boolean remove(int xpos, int ypos) {

@@ -18,18 +18,18 @@ public class MillConditionsTest {
 
     @Test
     public void millsCorrect() {
-        Board.placePiece(BLUE_PLAYER, 0, 0);
-        Board.placePiece(BLUE_PLAYER, 0, 3);
-        Board.placePiece(BLUE_PLAYER, 0, 6);
+        Board.placePiece( 0, 0);
+        Board.placePiece( 0, 3);
+        Board.placePiece( 0, 6);
 
         assertTrue(Board.isPositionMilled(0, 3));
     }
 
     @Test
     public void millsCorrectOnRemove() {
-        Board.placePiece(BLUE_PLAYER, 0, 0);
-        Board.placePiece(BLUE_PLAYER, 0, 3);
-        Board.placePiece(BLUE_PLAYER, 0, 6);
+        Board.placePiece( 0, 0);
+        Board.placePiece( 0, 3);
+        Board.placePiece( 0, 6);
 
         Board.remove(0, 6);
         assertFalse(Board.isPositionMilled(0, 3));
