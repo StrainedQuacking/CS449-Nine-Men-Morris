@@ -108,6 +108,18 @@ public class Board {
         }
     }
 
+    static public boolean movePiece(int fromX, int fromY, int toX, int toY) {
+        List<Pair<Integer, Integer>> adjacent = adjacentPieces(fromX, fromY);
+        for (Pair<Integer, Integer> pair : adjacent) {
+            if (pair.getKey() == toX && pair.getValue() == toY) {
+                boolean isMilled = placePiece(toX, toY);
+                remove(fromX, fromY);
+                return isMilled;
+            }
+        }
+        return false;
+    }
+
     static public ColorStatus position(int xpos, int ypos) {
         return boardArray.get(xpos).get(ypos).getStatus();
     }

@@ -102,6 +102,15 @@ public class BoardTest {
     }
 
     @Test
+    public void movePiece_noUpdateOnBadInput() {
+        Board.placePiece(0, 0);
+        Board.movePiece(0, 0, 0, 1);
+
+        assertEquals(INVALID, Board.position(0, 1));
+        assertEquals(RED, Board.position(0, 0));
+    }
+
+    @Test
     public void determineMills_returnsTrueOnMill() {
         assertFalse(Board.placePiece( 0, 0));
         assertFalse(Board.placePiece(0, 3));
@@ -145,7 +154,6 @@ public class BoardTest {
         expectedOutput.add(new Pair<>(0, 6));
 
         assertEquals(expectedOutput, output);
-
     }
 
     @Test
