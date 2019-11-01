@@ -49,36 +49,36 @@ public class Board {
         boardMills.add(15, new MillConditions(0, 6, 3, 6, 6, 6));
 
         // xpos, ypos
-        boardArray.get(0).get(0).initialize(EMPTY, boardMills.get(0), boardMills.get(8));
-        boardArray.get(0).get(3).initialize(EMPTY, boardMills.get(0), boardMills.get(11));
-        boardArray.get(0).get(6).initialize(EMPTY, boardMills.get(0), boardMills.get(15));
+        boardArray.get(0).get(0).initialize(boardMills.get(0), boardMills.get(8));
+        boardArray.get(0).get(3).initialize(boardMills.get(0), boardMills.get(11));
+        boardArray.get(0).get(6).initialize(boardMills.get(0), boardMills.get(15));
 
-        boardArray.get(1).get(1).initialize(EMPTY, boardMills.get(1), boardMills.get(9));
-        boardArray.get(1).get(3).initialize(EMPTY, boardMills.get(1), boardMills.get(11));
-        boardArray.get(1).get(5).initialize(EMPTY, boardMills.get(1), boardMills.get(14));
+        boardArray.get(1).get(1).initialize(boardMills.get(1), boardMills.get(9));
+        boardArray.get(1).get(3).initialize(boardMills.get(1), boardMills.get(11));
+        boardArray.get(1).get(5).initialize(boardMills.get(1), boardMills.get(14));
 
-        boardArray.get(2).get(2).initialize(EMPTY, boardMills.get(2), boardMills.get(10));
-        boardArray.get(2).get(3).initialize(EMPTY, boardMills.get(2), boardMills.get(11));
-        boardArray.get(2).get(4).initialize(EMPTY, boardMills.get(2), boardMills.get(13));
+        boardArray.get(2).get(2).initialize(boardMills.get(2), boardMills.get(10));
+        boardArray.get(2).get(3).initialize(boardMills.get(2), boardMills.get(11));
+        boardArray.get(2).get(4).initialize(boardMills.get(2), boardMills.get(13));
 
-        boardArray.get(3).get(0).initialize(EMPTY, boardMills.get(3), boardMills.get(8));
-        boardArray.get(3).get(1).initialize(EMPTY, boardMills.get(3), boardMills.get(9));
-        boardArray.get(3).get(2).initialize(EMPTY, boardMills.get(3), boardMills.get(10));
-        boardArray.get(3).get(4).initialize(EMPTY, boardMills.get(4), boardMills.get(13));
-        boardArray.get(3).get(5).initialize(EMPTY, boardMills.get(4), boardMills.get(14));
-        boardArray.get(3).get(6).initialize(EMPTY, boardMills.get(4), boardMills.get(15));
+        boardArray.get(3).get(0).initialize(boardMills.get(3), boardMills.get(8));
+        boardArray.get(3).get(1).initialize(boardMills.get(3), boardMills.get(9));
+        boardArray.get(3).get(2).initialize(boardMills.get(3), boardMills.get(10));
+        boardArray.get(3).get(4).initialize(boardMills.get(4), boardMills.get(13));
+        boardArray.get(3).get(5).initialize(boardMills.get(4), boardMills.get(14));
+        boardArray.get(3).get(6).initialize(boardMills.get(4), boardMills.get(15));
 
-        boardArray.get(4).get(2).initialize(EMPTY, boardMills.get(5), boardMills.get(10));
-        boardArray.get(4).get(3).initialize(EMPTY, boardMills.get(5), boardMills.get(12));
-        boardArray.get(4).get(4).initialize(EMPTY, boardMills.get(5), boardMills.get(13));
+        boardArray.get(4).get(2).initialize(boardMills.get(5), boardMills.get(10));
+        boardArray.get(4).get(3).initialize(boardMills.get(5), boardMills.get(12));
+        boardArray.get(4).get(4).initialize(boardMills.get(5), boardMills.get(13));
 
-        boardArray.get(5).get(1).initialize(EMPTY, boardMills.get(6), boardMills.get(9));
-        boardArray.get(5).get(3).initialize(EMPTY, boardMills.get(6), boardMills.get(12));
-        boardArray.get(5).get(5).initialize(EMPTY, boardMills.get(6), boardMills.get(14));
+        boardArray.get(5).get(1).initialize(boardMills.get(6), boardMills.get(9));
+        boardArray.get(5).get(3).initialize(boardMills.get(6), boardMills.get(12));
+        boardArray.get(5).get(5).initialize(boardMills.get(6), boardMills.get(14));
 
-        boardArray.get(6).get(0).initialize(EMPTY, boardMills.get(7), boardMills.get(8));
-        boardArray.get(6).get(3).initialize(EMPTY, boardMills.get(7), boardMills.get(12));
-        boardArray.get(6).get(6).initialize(EMPTY, boardMills.get(7), boardMills.get(15));
+        boardArray.get(6).get(0).initialize(boardMills.get(7), boardMills.get(8));
+        boardArray.get(6).get(3).initialize(boardMills.get(7), boardMills.get(12));
+        boardArray.get(6).get(6).initialize(boardMills.get(7), boardMills.get(15));
 
     }
 
