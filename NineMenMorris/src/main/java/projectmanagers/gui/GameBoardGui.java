@@ -35,7 +35,6 @@ public class GameBoardGui extends JFrame {
         player1Panel = new Player1Panel();
         player2Panel = new Player2Panel();
         buildBoard();
-        pieceActions();
     }
 
     private void pieceActions () {
@@ -50,6 +49,7 @@ public class GameBoardGui extends JFrame {
         masterPanel.setPreferredSize(new Dimension(MAX_WIDTH, MAX_HEIGHT));
         addPanels();
         buttonActions();
+        pieceActions();
 
     }
     // Adding panels to master panel
@@ -69,7 +69,7 @@ public class GameBoardGui extends JFrame {
         reset.setEnabled(false);
         buttonPanel.add(onePlay);
         buttonPanel.add(twoPlay);
-        //buttonPanel.add(reset);
+        buttonPanel.add(reset);
         onePlay.addActionListener(actionEvent -> {
             JOptionPane.showMessageDialog(null, "CPU doesn't exist...", "ERROR", JOptionPane.ERROR_MESSAGE);
             gameType = GameStatuses.GameType.SINGLE_PLAYER;
@@ -99,6 +99,10 @@ public class GameBoardGui extends JFrame {
         reset.addActionListener(actionEvent -> {
             Board.resetBoard();
             gamePanel.resetPanel();
+            player1Panel.reset();
+            player2Panel.reset();
+            pieceActions();
+            GameStatuses.turn = GameStatuses.TurnsEnum.MENU;
             gameType = GameStatuses.GameType.MENU;
             onePlay.setEnabled(true);
             twoPlay.setEnabled(true);

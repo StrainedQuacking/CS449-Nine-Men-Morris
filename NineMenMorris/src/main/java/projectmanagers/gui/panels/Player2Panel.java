@@ -51,5 +51,13 @@ public class Player2Panel extends JPanel {
     public static boolean hasTurn () {
         return BLUE_PLAYER.getTurns() >= 0;
     }
+    public void reset() {
+        for(PlayerPieces piece : pieces) {
+            piece.setBg(Color.blue);
+            piece.setOL(Color.black);
+        }
+        revalidate();
+        repaint();
+    }
 }
 
