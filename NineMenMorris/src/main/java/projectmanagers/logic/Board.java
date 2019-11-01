@@ -10,6 +10,7 @@ import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.*;
 import static main.java.projectmanagers.logic.GameStatuses.TurnsEnum.PLAYER1;
 import static main.java.projectmanagers.trackers.PlayerTracking.*;
 
+// Contains the logic and data for the Board values
 public class Board {
 
     static private List<List<Position>> boardArray = new ArrayList<>();
@@ -19,6 +20,7 @@ public class Board {
         startingBoard();
     }
 
+    // Constructs the data structure for the initial board
     static void startingBoard() {
 
         for (int i = 0; i < 7; i++){
@@ -80,6 +82,7 @@ public class Board {
 
     }
 
+    // Places a colored piece on the given xpos and ypos based on the current turn
     static public boolean placePiece(int xpos, int ypos) {
         ColorStatus updateColor;
         if (turn == PLAYER1) {
@@ -98,6 +101,7 @@ public class Board {
         }
     }
 
+    // Removes the given piece and replaces it with EMPTY
     static public boolean remove(int xpos, int ypos) {
         if (boardArray.get(xpos).get(ypos).getStatus() != EMPTY && boardArray.get(xpos).get(ypos).getStatus() != INVALID) {
             PLAYER_LOOKUP.get(boardArray.get(xpos).get(ypos).getStatus()).decrementPieces();
@@ -108,26 +112,17 @@ public class Board {
         }
     }
 
-    static public boolean movePiece(int fromX, int fromY, int toX, int toY) {
-        List<Pair<Integer, Integer>> adjacent = adjacentPieces(fromX, fromY);
-        for (Pair<Integer, Integer> pair : adjacent) {
-            if (pair.getKey() == toX && pair.getValue() == toY) {
-                boolean isMilled = placePiece(toX, toY);
-                remove(fromX, fromY);
-                return isMilled;
-            }
-        }
-        return false;
-    }
-
+    // Returns the ColorStatus of the given xpos ypos
     static public ColorStatus position(int xpos, int ypos) {
         return boardArray.get(xpos).get(ypos).getStatus();
     }
 
+    // Returns the isMilled status of the given xpos ypos
     static public boolean isPositionMilled(int xpos, int ypos) {
         return boardArray.get(xpos).get(ypos).isMilled();
     }
 
+    // Returns whether or not any positions of the turn color have an open adjacent position
     static public boolean noEmptyAdjacentPositions() {
         ColorStatus playerTurn;
         int emptySpaces = 0;
@@ -150,6 +145,7 @@ public class Board {
         return true;
     }
 
+    // Returns the adjacent positions to a given xpos ypos
     static public List<Pair<Integer, Integer>> adjacentPieces(int xpos, int ypos) {
 
         List<Pair<Integer, Integer>> adjacentPieces = new ArrayList<>();
@@ -287,6 +283,7 @@ public class Board {
         return adjacentPieces;
     }
 
+    // Returns all pieces in a milled position on the board
     static public List<Pair<Integer, Integer>> getMilledPieces() {
         List<Pair<Integer, Integer>> mills = new ArrayList<>();
         for (int xpos = 0; xpos < 7; xpos++) {
