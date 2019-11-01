@@ -97,8 +97,14 @@ public class GameBoardGui extends JFrame {
             reset.setEnabled(true);
         });
         reset.addActionListener(actionEvent -> {
-            dispose();
-            start();
+            Board.resetBoard();
+            gamePanel.resetPanel();
+            gameType = GameStatuses.GameType.MENU;
+            onePlay.setEnabled(true);
+            twoPlay.setEnabled(true);
+            reset.setEnabled(false);
+            revalidate();
+            repaint();
         });
     }
     // Method initializes the board JFrame and sets up default GUI
@@ -106,7 +112,7 @@ public class GameBoardGui extends JFrame {
         JFrame frame = new JFrame("CS 449 Project");
         frame.setResizable(true);
         frame.setContentPane(new GameBoardGui().masterPanel);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
         frame.pack();
     }

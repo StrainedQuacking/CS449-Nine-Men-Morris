@@ -163,6 +163,14 @@ public class GamePanel extends JPanel {
         revalidate();
         repaint();
     }
+    public void resetPanel() {
+        removeAll();
+        buildBoard();
+        RED_PLAYER.setInitialVariables();
+        BLUE_PLAYER.setInitialVariables();
+        revalidate();
+        repaint();
+    }
     // Builds arrays, lines, and lays out the board
     private void buildBoard () {
         buildArrays();

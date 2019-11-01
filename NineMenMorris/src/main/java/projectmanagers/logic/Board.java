@@ -19,6 +19,10 @@ public class Board {
         startingBoard();
     }
 
+    public static void resetBoard() {
+        boardArray.clear();
+        startingBoard();
+    }
     static void startingBoard() {
 
         for (int i = 0; i < 7; i++){
