@@ -144,29 +144,31 @@ public class GameBoardGui extends JFrame {
     }
     // Visually displays who has the current turn
     private void showTurn () {
-        if(GameStatuses.turn.equals(GameStatuses.TurnsEnum.PLAYER1)) {
-            player1Panel.player1Txt.setBorder(BorderFactory.createLineBorder(Color.yellow));
-            player2Panel.player2Txt.setBorder(BorderFactory.createEmptyBorder());
-            player1Panel.player1Txt.setForeground(Color.red);
-            player2Panel.player2Txt.setForeground(Color.black);
-            player1Panel.player1Txt.setFont(new Font("Serif", Font.BOLD, 18));
-            player2Panel.player2Txt.setFont(new Font("Serif", Font.PLAIN, 18));
-        }
-        else if (GameStatuses.turn.equals(GameStatuses.TurnsEnum.PLAYER2)){
-            player1Panel.player1Txt.setBorder(BorderFactory.createEmptyBorder());
-            player2Panel.player2Txt.setBorder(BorderFactory.createLineBorder(Color.yellow));
-            player1Panel.player1Txt.setForeground(Color.black);
-            player2Panel.player2Txt.setForeground(Color.blue);
-            player1Panel.player1Txt.setFont(new Font("Serif", Font.PLAIN, 18));
-            player2Panel.player2Txt.setFont(new Font("Serif", Font.BOLD, 18));
-        }
-        else {
-            player1Panel.player1Txt.setBorder(BorderFactory.createEmptyBorder());
-            player2Panel.player2Txt.setBorder(BorderFactory.createEmptyBorder());
-            player1Panel.player1Txt.setForeground(Color.black);
-            player2Panel.player2Txt.setForeground(Color.black);
-            player1Panel.player1Txt.setFont(new Font("Serif", Font.PLAIN, 18));
-            player2Panel.player2Txt.setFont(new Font("Serif", Font.PLAIN, 18));
+        switch (GameStatuses.turn) {
+            case PLAYER1:
+                player1Panel.player1Txt.setBorder(BorderFactory.createLineBorder(Color.yellow));
+                player2Panel.player2Txt.setBorder(BorderFactory.createEmptyBorder());
+                player1Panel.player1Txt.setForeground(Color.red);
+                player2Panel.player2Txt.setForeground(Color.black);
+                player1Panel.player1Txt.setFont(new Font("Serif", Font.BOLD, 18));
+                player2Panel.player2Txt.setFont(new Font("Serif", Font.PLAIN, 18));
+                break;
+            case PLAYER2:
+                player1Panel.player1Txt.setBorder(BorderFactory.createEmptyBorder());
+                player2Panel.player2Txt.setBorder(BorderFactory.createLineBorder(Color.yellow));
+                player1Panel.player1Txt.setForeground(Color.black);
+                player2Panel.player2Txt.setForeground(Color.blue);
+                player1Panel.player1Txt.setFont(new Font("Serif", Font.PLAIN, 18));
+                player2Panel.player2Txt.setFont(new Font("Serif", Font.BOLD, 18));
+                break;
+            default:
+                player1Panel.player1Txt.setBorder(BorderFactory.createEmptyBorder());
+                player2Panel.player2Txt.setBorder(BorderFactory.createEmptyBorder());
+                player1Panel.player1Txt.setForeground(Color.black);
+                player2Panel.player2Txt.setForeground(Color.black);
+                player1Panel.player1Txt.setFont(new Font("Serif", Font.PLAIN, 18));
+                player2Panel.player2Txt.setFont(new Font("Serif", Font.PLAIN, 18));
+                break;
         }
         if(GameStatuses.getGamePlay() == GameStatuses.GamePlay.END){
             switch (GameStatuses.turn) {
