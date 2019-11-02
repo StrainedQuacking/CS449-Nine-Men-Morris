@@ -189,6 +189,8 @@ public class GameBoardGui extends JFrame {
                 @Override
                 public void mouseClicked(MouseEvent me) {
                     gamePlay = GameStatuses.getGamePlay();
+                    int x = GamePanel.boardPieces.get(temp).getXCoordinate();
+                    int y = GamePanel.boardPieces.get(temp).getYCoordinate();
                     if(!P1hasMill && !P2hasMill) {
                         switch (gameType) {
                             case TWO_PLAYER:
@@ -198,14 +200,14 @@ public class GameBoardGui extends JFrame {
                                             case PLAYER1:
                                                 gamePanel.addPlayer1Piece(GamePanel.boardPieces.get(temp));
                                                 player1Panel.decrementTurns();
-                                                if(!(Board.isPositionMilled(GamePanel.boardPieces.get(temp).getXCoordinate(), GamePanel.boardPieces.get(temp).getYCoordinate())))
+                                                if(!(Board.isPositionMilled(x, y)))
                                                     GameStatuses.changeTurn();
                                                 gamePanel.showMills();
                                                 break;
                                             case PLAYER2:
                                                 gamePanel.addPlayer2Piece(GamePanel.boardPieces.get(temp));
                                                 player2Panel.decrementTurns();
-                                                if(!(Board.isPositionMilled(GamePanel.boardPieces.get(temp).getXCoordinate(), GamePanel.boardPieces.get(temp).getYCoordinate())))
+                                                if(!(Board.isPositionMilled(x, y)))
                                                     GameStatuses.changeTurn();
                                                 gamePanel.showMills();
                                                 break;
@@ -246,7 +248,7 @@ public class GameBoardGui extends JFrame {
                                 break;
                         }
                     }
-                    if(Board.isPositionMilled(GamePanel.boardPieces.get(temp).getXCoordinate(), GamePanel.boardPieces.get(temp).getYCoordinate())) {
+                    if(Board.isPositionMilled(x, y)) {
                         if(GameStatuses.turn.equals(GameStatuses.TurnsEnum.PLAYER1)) {
                             player2Play = GameStatuses.PlayerPlay.MILLABLE;
                             P1hasMill = true;
