@@ -107,7 +107,7 @@ public class GameBoardGui extends JFrame {
             reset.setEnabled(true);
         });
         reset.addActionListener(actionEvent -> {
-            Board.resetBoard();
+            Board.reset();
             gamePanel.resetPanel();
             player1Panel.reset();
             player2Panel.reset();

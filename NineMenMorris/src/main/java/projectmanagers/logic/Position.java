@@ -30,8 +30,8 @@ public class Position {
         return colorStatus;
     }
 
-    public void initialize(ColorStatus colorStatus, MillConditions millConditionsX, MillConditions millConditionsY){
-        this.colorStatus = colorStatus;
+    public void initialize(MillConditions millConditionsX, MillConditions millConditionsY){
+        this.colorStatus = EMPTY;
         this.millConditionsX = millConditionsX;
         this.millConditionsY = millConditionsY;
     }
