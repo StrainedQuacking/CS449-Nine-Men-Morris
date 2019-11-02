@@ -25,6 +25,7 @@ public class Board {
         startingBoard();
     }
     // Constructs the data structure for the initial board
+    // Constructs the data structure for the initial board
     static void startingBoard() {
 
         for (int i = 0; i < 7; i++){
