@@ -125,12 +125,12 @@ public class GameBoardGui extends JFrame {
     // alerting messages, only alerts for mills at the moment. possibility for tutorial version
     public void alertMessages() {
         if(player2Play.equals(GameStatuses.PlayerPlay.MILLABLE))
-            titlePanel.lAlert.setText("     Player 1 has a mill!");
+            titlePanel.lAlert.setText("   Player 1 has a mill!");
         else if(player1Play.equals(GameStatuses.PlayerPlay.MILLABLE))
-            titlePanel.rAlert.setText("Player 2 has a mill!     ");
+            titlePanel.rAlert.setText("Player 2 has a mill!   ");
         else {
-            titlePanel.lAlert.setText("");
-            titlePanel.rAlert.setText("");
+            titlePanel.lAlert.setText("                          ");
+            titlePanel.rAlert.setText("                          ");
         }
     }
     // Method initializes the board JFrame and sets up default GUI

@@ -11,8 +11,8 @@ public class TitlePanel extends JPanel {
     public TitlePanel () {
         super();
         title = new JLabel("Nine Men's Morris");
-        rAlert = new JLabel("");
-        lAlert = new JLabel("");
+        rAlert = new JLabel("                          ");
+        lAlert = new JLabel("                          ");
         buildPanel();
     }
     // sets up the title panel
