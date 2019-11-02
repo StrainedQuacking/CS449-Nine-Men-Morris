@@ -191,20 +191,7 @@ public class GameBoardGui extends JFrame {
                                     case MIDDLE:
                                         switch (GameStatuses.turn) {
                                             case PLAYER1:
-                                                //FLY
-                                                if (player1Play.equals(GameStatuses.PlayerPlay.SELECTED) && RED_PLAYER.getPieces() == 3) {
-                                                    gamePanel.swapPlayerPiece(GamePanel.boardPieces.get(temp), gamePanel.getSelectedPlayer1Piece());
-                                                    if(Board.isPositionMilled(gamePanel.getSelectedPlayer1Piece().getXCoordinate(), gamePanel.getSelectedPlayer1Piece().getYCoordinate())) {
-                                                        player2Play = GameStatuses.PlayerPlay.MILLABLE;
-                                                        P1hasMill = true;
-                                                        gamePanel.showMills();
-                                                    }
-                                                    player1Play = GameStatuses.PlayerPlay.DESELECTED;
-                                                    if(!P1hasMill)
-                                                        GameStatuses.changeTurn();
-                                                }
-                                                //SLIDE
-                                                else if (player1Play.equals(GameStatuses.PlayerPlay.SELECTED) && gamePanel.canSlide(GamePanel.boardPieces.get(temp), gamePanel.getSelectedPlayer1Piece())) {
+                                                if (player1Play.equals(GameStatuses.PlayerPlay.SELECTED) && (gamePanel.canSlide(GamePanel.boardPieces.get(temp), gamePanel.getSelectedPlayer1Piece()) || RED_PLAYER.getPieces() == 3)) {
                                                     gamePanel.swapPlayerPiece(GamePanel.boardPieces.get(temp), gamePanel.getSelectedPlayer1Piece());
                                                     if(Board.isPositionMilled(gamePanel.getSelectedPlayer1Piece().getXCoordinate(), gamePanel.getSelectedPlayer1Piece().getYCoordinate())) {
                                                         player2Play = GameStatuses.PlayerPlay.MILLABLE;
@@ -217,21 +204,7 @@ public class GameBoardGui extends JFrame {
                                                 }
                                                 break;
                                             case PLAYER2:
-                                                //FLY
-                                                if (player2Play.equals(GameStatuses.PlayerPlay.SELECTED) && BLUE_PLAYER.getPieces() == 3) {
-                                                    gamePanel.swapPlayerPiece(GamePanel.boardPieces.get(temp), gamePanel.getSelectedPlayer2Piece());
-                                                    player2Play = GameStatuses.PlayerPlay.DESELECTED;
-                                                    if(Board.isPositionMilled(gamePanel.getSelectedPlayer2Piece().getXCoordinate(), gamePanel.getSelectedPlayer2Piece().getYCoordinate())) {
-                                                        player1Play = GameStatuses.PlayerPlay.MILLABLE;
-                                                        P2hasMill = true;
-                                                        gamePanel.showMills();
-                                                    }
-                                                    player2Play = GameStatuses.PlayerPlay.DESELECTED;
-                                                    if(!P2hasMill)
-                                                        GameStatuses.changeTurn();
-                                                }
-                                                //SLIDE
-                                                else if (player2Play.equals(GameStatuses.PlayerPlay.SELECTED) && gamePanel.canSlide(GamePanel.boardPieces.get(temp), gamePanel.getSelectedPlayer2Piece())) {
+                                                if (player2Play.equals(GameStatuses.PlayerPlay.SELECTED) && (gamePanel.canSlide(GamePanel.boardPieces.get(temp), gamePanel.getSelectedPlayer2Piece()) || BLUE_PLAYER.getPieces() == 3)) {
                                                     gamePanel.swapPlayerPiece(GamePanel.boardPieces.get(temp), gamePanel.getSelectedPlayer2Piece());
                                                     if(Board.isPositionMilled(gamePanel.getSelectedPlayer2Piece().getXCoordinate(), gamePanel.getSelectedPlayer2Piece().getYCoordinate())) {
                                                         player1Play = GameStatuses.PlayerPlay.MILLABLE;

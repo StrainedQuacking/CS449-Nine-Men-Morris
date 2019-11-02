@@ -47,6 +47,7 @@ public class GamePanel extends JPanel {
         revalidate();
         repaint();
     }
+    // method gets the original board piece with the specified coordinates
     private BoardPieces getOrigin (PlayerPieces playerPiece) {
         for (BoardPieces blackPiece : boardPieces) {
             if (blackPiece.getXCoordinate() == playerPiece.getXCoordinate() && blackPiece.getYCoordinate() == playerPiece.getYCoordinate())
@@ -54,6 +55,7 @@ public class GamePanel extends JPanel {
         }
         return (new BoardPieces(playerPiece.getXCoordinate(), playerPiece.getYCoordinate()));
     }
+    // if a piece is in a mill then the ol is changed to green
     public void showMills() {
         for(PlayerPieces red : player1Pieces) {
             if(inMill(red) && !red.isSelected())
@@ -68,6 +70,7 @@ public class GamePanel extends JPanel {
                 blue.setOL(Color.black);
         }
     }
+    // checks if players have any pieces that are not in a mill
     public static boolean noRemainingP1Millable() {
         for(PlayerPieces red : player1Pieces) {
             if(!inMill(red) && red.getXCoordinate() != 8)
@@ -84,13 +87,13 @@ public class GamePanel extends JPanel {
     }
     // if pieces are in a mill then return true
     public static boolean inMill(PlayerPieces playerPiece) {
-        Pair pairToMill = new Pair<Integer, Integer>(playerPiece.getXCoordinate(), playerPiece.getYCoordinate());
+        Pair pairToMill = new Pair<>(playerPiece.getXCoordinate(), playerPiece.getYCoordinate());
         List<Pair<Integer, Integer>> pairsInMills = Board.getMilledPieces();
         return (pairsInMills.contains(pairToMill));
     }
-    //TODO: @Nate -> automated tests for this
+    // checks if the player piece has an adjacent board piece open
     public boolean canSlide (BoardPieces blackPiece, PlayerPieces playerPiece) {
-        Pair blackPair = new Pair<Integer, Integer>(blackPiece.getXCoordinate(), blackPiece.getYCoordinate());
+        Pair blackPair = new Pair<>(blackPiece.getXCoordinate(), blackPiece.getYCoordinate());
         List<Pair<Integer, Integer>> adjacentPieces = Board.adjacentPieces(playerPiece.getXCoordinate(), playerPiece.getYCoordinate());
         return (adjacentPieces.contains(blackPair));
     }
@@ -113,12 +116,14 @@ public class GamePanel extends JPanel {
         revalidate();
         repaint();
     }
+    // selects a place piece and reserves a selected coordinate location
     public void setSelectedPiece(PlayerPieces piece) {
         piece.selectPiece();
         selectedPiece = piece;
         selectedPiece.setXCoordinate(piece.getXCoordinate());
         selectedPiece.setYCoordinate(piece.getYCoordinate());
     }
+    // deselects all pieces and changes ol to black
     public void deselectPiece() {
         for(PlayerPieces piece : player1Pieces)
             piece.deselectPiece();
@@ -163,6 +168,7 @@ public class GamePanel extends JPanel {
         revalidate();
         repaint();
     }
+    // method for resetting the gamePanel
     public void resetPanel() {
         removeAll();
         buildBoard();
