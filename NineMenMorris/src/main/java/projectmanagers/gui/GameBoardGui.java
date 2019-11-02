@@ -120,6 +120,16 @@ public class GameBoardGui extends JFrame {
             repaint();
         });
     }
+    public void alertMessages() {
+        if(player2Play.equals(GameStatuses.PlayerPlay.MILLABLE))
+            titlePanel.lAlert.setText("     Player 1 has a mill!");
+        else if(player1Play.equals(GameStatuses.PlayerPlay.MILLABLE))
+            titlePanel.rAlert.setText("Player 2 has a mill!     ");
+        else {
+            titlePanel.lAlert.setText("");
+            titlePanel.rAlert.setText("");
+        }
+    }
     // Method initializes the board JFrame and sets up default GUI
     public static void start() {
         JFrame frame = new JFrame("CS 449 Project");
@@ -234,6 +244,7 @@ public class GameBoardGui extends JFrame {
                         }
                     }
                     showTurn();
+                    alertMessages();
                 }
             });
         }
@@ -283,6 +294,7 @@ public class GameBoardGui extends JFrame {
                             }
                     }
                     showTurn();
+                    alertMessages();
                 }
             });
         }
@@ -331,6 +343,7 @@ public class GameBoardGui extends JFrame {
                             }
                         }
                     showTurn();
+                    alertMessages();
                 }
             });
         }
