@@ -113,6 +113,8 @@ public class GameBoardGui extends JFrame {
             player2Panel.reset();
             pieceActions();
             gameType = GameStatuses.GameType.MENU;
+            GameStatuses.turn = GameStatuses.TurnsEnum.MENU;
+            showTurn();
             onePlay.setEnabled(true);
             twoPlay.setEnabled(true);
             reset.setEnabled(false);
@@ -120,6 +122,7 @@ public class GameBoardGui extends JFrame {
             repaint();
         });
     }
+    // alerting messages, only alerts for mills at the moment. possibility for tutorial version
     public void alertMessages() {
         if(player2Play.equals(GameStatuses.PlayerPlay.MILLABLE))
             titlePanel.lAlert.setText("     Player 1 has a mill!");
@@ -156,6 +159,14 @@ public class GameBoardGui extends JFrame {
             player2Panel.player2Txt.setForeground(Color.blue);
             player1Panel.player1Txt.setFont(new Font("Serif", Font.PLAIN, 18));
             player2Panel.player2Txt.setFont(new Font("Serif", Font.BOLD, 18));
+        }
+        else {
+            player1Panel.player1Txt.setBorder(BorderFactory.createEmptyBorder());
+            player2Panel.player2Txt.setBorder(BorderFactory.createEmptyBorder());
+            player1Panel.player1Txt.setForeground(Color.black);
+            player2Panel.player2Txt.setForeground(Color.black);
+            player1Panel.player1Txt.setFont(new Font("Serif", Font.PLAIN, 18));
+            player2Panel.player2Txt.setFont(new Font("Serif", Font.PLAIN, 18));
         }
         if(GameStatuses.getGamePlay() == GameStatuses.GamePlay.END){
             switch (GameStatuses.turn) {
