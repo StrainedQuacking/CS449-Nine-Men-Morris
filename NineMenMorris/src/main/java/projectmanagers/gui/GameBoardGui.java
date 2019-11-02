@@ -71,10 +71,20 @@ public class GameBoardGui extends JFrame {
         buttonPanel.add(twoPlay);
         buttonPanel.add(reset);
         onePlay.addActionListener(actionEvent -> {
-            JOptionPane.showMessageDialog(null, "CPU doesn't exist...", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JLabel label = new JLabel("Select difficulty: ");
+            JRadioButton easy = new JRadioButton("Easy");
+            easy.setSelected(true);
+            JRadioButton medium = new JRadioButton("Medium");
+            JRadioButton hard = new JRadioButton("Hard");
+            JPanel choice = new JPanel();
+            ButtonGroup group = new ButtonGroup();
+            group.add(easy);     group.add(medium);     group.add(hard);
+            choice.add(label);  choice.add(easy);    choice.add(medium);    choice.add(hard);
+            JOptionPane.showMessageDialog(null, choice, "Difficulty", JOptionPane.QUESTION_MESSAGE);
             gameType = GameStatuses.GameType.SINGLE_PLAYER;
             onePlay.setEnabled(false);
-            twoPlay.setEnabled(true);
+            twoPlay.setEnabled(false);
+            reset.setEnabled(true);
         });
         twoPlay.addActionListener(actionEvent -> {
             JLabel label = new JLabel("Who goes first?");
@@ -102,7 +112,6 @@ public class GameBoardGui extends JFrame {
             player1Panel.reset();
             player2Panel.reset();
             pieceActions();
-            GameStatuses.turn = GameStatuses.TurnsEnum.MENU;
             gameType = GameStatuses.GameType.MENU;
             onePlay.setEnabled(true);
             twoPlay.setEnabled(true);
@@ -116,7 +125,7 @@ public class GameBoardGui extends JFrame {
         JFrame frame = new JFrame("CS 449 Project");
         frame.setResizable(true);
         frame.setContentPane(new GameBoardGui().masterPanel);
-        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.pack();
     }
