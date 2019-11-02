@@ -98,10 +98,10 @@ public class PlayerPieces extends JButton {
         int radius = diameter / 2;
         g.setColor(outline);
         // highlight the pieces in a mill
-        if(GameBoardGui.P1hasMill && bg.equals(Color.blue) && mouseOver && (!outline.equals(Color.green) || GamePanel.noRemainingP2Millable()))
+        if(GameBoardGui.P1hasMill && bg.equals(Color.blue) && mouseOver && (!outline.equals(Color.green) || GamePanel.noRemainingMillable()))
             g.setColor(Color.yellow);
         //
-        else if(GameBoardGui.P2hasMill && bg.equals(Color.red) && mouseOver && (!outline.equals(Color.green) || GamePanel.noRemainingP1Millable()))
+        else if(GameBoardGui.P2hasMill && bg.equals(Color.red) && mouseOver && (!outline.equals(Color.green) || GamePanel.noRemainingMillable()))
             g.setColor(Color.yellow);
         g.drawOval((getWidth() / 2) - radius, (getHeight() / 2) - radius, diameter, diameter);
         g.setColor(bg);
