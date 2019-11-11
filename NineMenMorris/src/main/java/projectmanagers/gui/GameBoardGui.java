@@ -239,44 +239,6 @@ public class GameBoardGui extends JFrame {
                                         break;
                                 }
                             case SINGLE_PLAYER:
-                                switch (gamePlay) {
-                                    case BEGINNING:
-                                        switch (GameStatuses.turn) {
-                                            case PLAYER1:
-                                                gamePanel.addPlayer1Piece(GamePanel.boardPieces.get(temp));
-                                                player1Panel.decrementTurns();
-                                                if (!(Board.isPositionMilled(x, y)))
-                                                    GameStatuses.changeTurn();
-                                                gamePanel.showMills();
-                                                break;
-                                            case PLAYER2:
-                                                // TODO:
-                                                // cpu will return coordinates to place piece
-                                                break;
-                                        }
-                                    case MIDDLE:
-                                        switch (GameStatuses.turn) {
-                                            case PLAYER1:
-                                                if (player1Play.equals(GameStatuses.PlayerPlay.SELECTED) && (gamePanel.canSlide(GamePanel.boardPieces.get(temp), gamePanel.getSelectedPiece()) || RED_PLAYER.getPieces() == 3)) {
-                                                    gamePanel.swapPlayerPiece(GamePanel.boardPieces.get(temp), gamePanel.getSelectedPiece());
-                                                    if (Board.isPositionMilled(gamePanel.getSelectedPiece().getXCoordinate(), gamePanel.getSelectedPiece().getYCoordinate())) {
-                                                        player2Play = GameStatuses.PlayerPlay.MILLABLE;
-                                                        P1hasMill = true;
-                                                        gamePanel.showMills();
-                                                    }
-                                                    player1Play = GameStatuses.PlayerPlay.DESELECTED;
-                                                    if (!P1hasMill)
-                                                        GameStatuses.changeTurn();
-                                                }
-                                                break;
-                                            case PLAYER2:
-                                                // TODO:
-                                                // cpu will return coordinates to select piece
-                                                // cpu will return coordinates of place to swap
-                                                break;
-                                        }
-                                        break;
-                                }
                         }
                     }
                     if(Board.isPositionMilled(x, y)) {
