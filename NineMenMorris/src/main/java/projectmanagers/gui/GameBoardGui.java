@@ -238,7 +238,21 @@ public class GameBoardGui extends JFrame {
                                         }
                                         break;
                                 }
+                                break;
                             case SINGLE_PLAYER:
+                                switch(gamePlay) {
+                                    case BEGINNING:
+                                        gamePanel.addPlayer1Piece(GamePanel.boardPieces.get(temp));
+                                        player1Panel.decrementTurns();
+                                        if(!(Board.isPositionMilled(x, y))) {
+                                            GameStatuses.changeTurn();
+                                            showTurn();
+                                        }
+                                        break;
+                                    case MIDDLE:
+                                        break;
+                                }
+                                break;
                         }
                     }
                     if(Board.isPositionMilled(x, y)) {
