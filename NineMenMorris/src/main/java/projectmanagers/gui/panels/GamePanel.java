@@ -31,7 +31,7 @@ public class GamePanel extends JPanel {
         buildBoard();
     }
     public void cpuDelay () throws InterruptedException {
-        TimeUnit.SECONDS.wait(1);
+        TimeUnit.SECONDS.sleep(1);
     }
     public void cpuAddPiece(Pair<Integer, Integer> pair) {
         for(BoardPieces blackPiece : boardPieces){

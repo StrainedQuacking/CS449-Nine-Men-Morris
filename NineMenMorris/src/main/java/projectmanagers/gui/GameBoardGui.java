@@ -112,6 +112,7 @@ public class GameBoardGui extends JFrame {
             GameStatuses.turn = GameStatuses.TurnsEnum.MENU;
             player1Play = GameStatuses.PlayerPlay.DESELECTED;
             player2Play = GameStatuses.PlayerPlay.DESELECTED;
+            alertMessages();
             P1hasMill = false;  P2hasMill = false;
             showTurn();
             player2Panel.player2Txt.setText("Player 2");
