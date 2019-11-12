@@ -4,10 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
+import java.util.TimerTask;
+import java.util.Timer;
 import javafx.util.Pair;
+import main.java.projectmanagers.gui.GameBoardGui;
 import main.java.projectmanagers.gui.components.*;
+import main.java.projectmanagers.logic.AI;
 import main.java.projectmanagers.logic.Board;
 import main.java.projectmanagers.logic.GameStatuses;
 
@@ -22,6 +24,7 @@ public class GamePanel extends JPanel {
     public static ArrayList<PlayerPieces> player1Pieces;
     public static ArrayList<PlayerPieces> player2Pieces;
     private static PlayerPieces selectedPiece;
+    private Timer timer;
 
     public GamePanel () {
         super();
@@ -30,13 +33,26 @@ public class GamePanel extends JPanel {
         player2Pieces = new ArrayList<>(9);
         buildBoard();
     }
-    public void cpuDelay () throws InterruptedException {
-        TimeUnit.SECONDS.sleep(1);
-    }
     public void cpuAddPiece(Pair<Integer, Integer> pair) {
         for(BoardPieces blackPiece : boardPieces){
-            if(blackPiece.getXCoordinate() == pair.getKey() && blackPiece.getYCoordinate() == pair.getValue())
-                addPlayer2Piece(blackPiece);
+            if(blackPiece.getXCoordinate() == pair.getKey() && blackPiece.getYCoordinate() == pair.getValue()) {
+                timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        addPlayer2Piece(blackPiece);
+                        GameBoardGui.player2Panel.decrementTurns();
+                        if(Board.isPositionMilled(pair.getKey(), pair.getValue())) {
+                            showMills();
+                            cpuRemovePiece(AI.AIRemovePiece());
+                        }
+                        else {
+                            GameStatuses.changeTurn();
+                            GameBoardGui.showTurn();
+                        }
+                    }
+                }, 1000);
+            }
         }
     }
     public void cpuSelectPiece (Pair<Integer, Integer> pair) {
@@ -47,14 +63,41 @@ public class GamePanel extends JPanel {
     }
     public void cpuSwapPiece (Pair<Integer, Integer> pair) {
         for(BoardPieces blackPiece : boardPieces){
-            if(blackPiece.getXCoordinate() == pair.getKey() && blackPiece.getYCoordinate() == pair.getValue())
-                swapPlayerPiece(blackPiece, getSelectedPiece());
+            if(blackPiece.getXCoordinate() == pair.getKey() && blackPiece.getYCoordinate() == pair.getValue()) {
+                timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        deselectPiece();
+                        swapPlayerPiece(blackPiece, getSelectedPiece());
+                        if(Board.isPositionMilled(pair.getKey(), pair.getValue())) {
+                            showMills();
+                            cpuRemovePiece(AI.AIRemovePiece());
+                        }
+                        else {
+                            GameStatuses.changeTurn();
+                            GameBoardGui.showTurn();
+                        }
+                    }
+                }, 1000);
+            }
         }
     }
     public void cpuRemovePiece(Pair<Integer, Integer> pair) {
         for (PlayerPieces playerPiece : player1Pieces) {
-            if (playerPiece.getXCoordinate() == pair.getKey() && playerPiece.getYCoordinate() == pair.getValue())
-                millRemove(playerPiece);
+            if (playerPiece.getXCoordinate() == pair.getKey() && playerPiece.getYCoordinate() == pair.getValue()) {
+                playerPiece.selectPiece();
+                timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        deselectPiece();
+                        millRemove(playerPiece);
+                        GameStatuses.changeTurn();
+                        GameBoardGui.showTurn();
+                    }
+                }, 2000);
+            }
         }
     }
     // Method to remove a players piece if they are selected in a mill
@@ -184,7 +227,7 @@ public class GamePanel extends JPanel {
         gbc.gridx = piece.getXCoordinate(); gbc.gridy = piece.getYCoordinate();
         player2Pieces.get(BLUE_PLAYER.getTurns()).setXCoordinate(piece.getXCoordinate());
         player2Pieces.get(BLUE_PLAYER.getTurns()).setYCoordinate(piece.getYCoordinate());
-
+        player2Pieces.get(BLUE_PLAYER.getTurns()).setOL(Color.black);
         add(player2Pieces.get(BLUE_PLAYER.getTurns()), gbc);
         Board.placePiece(piece.getXCoordinate(), piece.getYCoordinate());
         revalidate();
