@@ -258,9 +258,7 @@ public class GameBoardGui extends JFrame {
                                                 GameStatuses.changeTurn();
                                                 Pair<Integer, Integer> pair = AI.AIPlacePiece();
                                                 gamePanel.cpuAddPiece(pair);
-                                                showTurn();
                                                 if (Board.isPositionMilled(pair.getKey(), pair.getValue())) {
-                                                    gamePanel.showMills();
                                                     gamePanel.cpuRemovePiece(AI.AIRemovePiece());
                                                 }
                                             }
@@ -277,6 +275,7 @@ public class GameBoardGui extends JFrame {
                                                 player1Play = GameStatuses.PlayerPlay.DESELECTED;
                                                 if (!P1hasMill) {
                                                     GameStatuses.changeTurn();
+                                                    showTurn();
                                                     List<Pair<Integer, Integer>> list = AI.AIMovePiece(false);
                                                     gamePanel.cpuSelectPiece(list.get(0));
                                                     gamePanel.cpuSwapPiece(list.get(1));
@@ -319,7 +318,6 @@ public class GameBoardGui extends JFrame {
                 @Override
                 public void mouseClicked(MouseEvent me) {
                     gamePlay = GameStatuses.getGamePlay();
-                    if (gameType.equals(GameStatuses.GameType.TWO_PLAYER)) {
                         switch (gamePlay) {
                             case BEGINNING:
                                 if (player1Play.equals(GameStatuses.PlayerPlay.MILLABLE) && (!GamePanel.inMill(GamePanel.player1Pieces.get(temp)) || GamePanel.noRemainingMillable())) {
@@ -359,7 +357,6 @@ public class GameBoardGui extends JFrame {
                         showTurn();
                         alertMessages();
                     }
-                }
             });
         }
     }
@@ -380,9 +377,7 @@ public class GameBoardGui extends JFrame {
                                     if(gameType.equals(GameStatuses.GameType.SINGLE_PLAYER)) {
                                         Pair<Integer, Integer> pair = AI.AIPlacePiece();
                                         gamePanel.cpuAddPiece(pair);
-                                        player2Panel.decrementTurns();
                                     }
-                                    gamePanel.showMills();
                                     break;
                                 }
                                 break;
@@ -398,12 +393,7 @@ public class GameBoardGui extends JFrame {
                                                 List<Pair<Integer, Integer>> list = AI.AIMovePiece(false);
                                                 gamePanel.cpuSelectPiece(list.get(0));
                                                 gamePanel.cpuSwapPiece(list.get(1));
-                                                if(Board.isPositionMilled(list.get(1).getKey(), list.get(1).getValue())) {
-                                                    gamePanel.showMills();
-                                                    gamePanel.cpuRemovePiece(AI.AIRemovePiece());
-                                                }
                                             }
-                                            gamePanel.showMills();
                                         }
                                         break;
                                     case SELECTED:

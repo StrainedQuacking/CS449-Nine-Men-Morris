@@ -56,6 +56,7 @@ public class GamePanel extends JPanel {
         }
     }
     public void cpuSelectPiece (Pair<Integer, Integer> pair) {
+        deselectPiece();
         for (PlayerPieces playerPiece : player2Pieces) {
             if (playerPiece.getXCoordinate() == pair.getKey() && playerPiece.getYCoordinate() == pair.getValue())
                 setSelectedPiece(playerPiece);
@@ -79,7 +80,7 @@ public class GamePanel extends JPanel {
                             GameBoardGui.showTurn();
                         }
                     }
-                }, 1000);
+                }, 2000);
             }
         }
     }
