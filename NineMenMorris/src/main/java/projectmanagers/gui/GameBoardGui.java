@@ -259,9 +259,6 @@ public class GameBoardGui extends JFrame {
                                                 GameStatuses.changeTurn();
                                                 Pair<Integer, Integer> pair = AI.AIPlacePiece();
                                                 gamePanel.cpuAddPiece(pair);
-                                                if (Board.isPositionMilled(pair.getKey(), pair.getValue())) {
-                                                    gamePanel.cpuRemovePiece(AI.AIRemovePiece());
-                                                }
                                             }
                                             gamePanel.showMills();
                                             break;
@@ -277,7 +274,7 @@ public class GameBoardGui extends JFrame {
                                                 if (!P1hasMill) {
                                                     GameStatuses.changeTurn();
                                                     showTurn();
-                                                    List<Pair<Integer, Integer>> list = AI.AIMovePiece(false);
+                                                    List<Pair<Integer, Integer>> list = AI.AIMovePiece();
                                                     gamePanel.cpuSelectPiece(list.get(0));
                                                     gamePanel.cpuSwapPiece(list.get(1));
                                                 }
@@ -388,7 +385,7 @@ public class GameBoardGui extends JFrame {
                                             GameStatuses.changeTurn();
                                             P1hasMill = false;
                                             if(gameType.equals(GameStatuses.GameType.SINGLE_PLAYER)) {
-                                                List<Pair<Integer, Integer>> list = AI.AIMovePiece(false);
+                                                List<Pair<Integer, Integer>> list = AI.AIMovePiece();
                                                 gamePanel.cpuSelectPiece(list.get(0));
                                                 gamePanel.cpuSwapPiece(list.get(1));
                                             }
