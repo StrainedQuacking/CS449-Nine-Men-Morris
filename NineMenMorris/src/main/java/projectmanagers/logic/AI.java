@@ -15,7 +15,7 @@ public class AI {
     static public Pair<Integer, Integer> AIPlacePiece() {
 
 
-        if(GameStatuses.turnCounter == 1)
+        if(GameStatuses.turnCounter == 0)
             return new Pair<>(0, 0);
         else if (GameStatuses.turnCounter == 2) {
             if (Board.boardArray.get(0).get(0).getStatus() == GameStatuses.ColorStatus.RED && Board.boardArray.get(6).get(6).getStatus() == GameStatuses.ColorStatus.EMPTY)
@@ -31,12 +31,12 @@ public class AI {
 
         List<Pair<Integer, Integer>> myPieces = new ArrayList<>();
 
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; i < 7; j++) {
-                if (Board.boardArray.get(i).get(j).getStatus() == GameStatuses.ColorStatus.BLUE)
-                    myPieces.add(new Pair<>(i, j));
-            }
-        }
+//        for (int i = 0; i < 7; i++) {
+//            for (int j = 0; i < 7; j++) {
+//                if (Board.boardArray.get(i).get(j).getStatus() == GameStatuses.ColorStatus.BLUE)
+//                    myPieces.add(new Pair<>(i, j));
+//            }
+//        }
 
 
         //else if I have a potential mill, add piece to the free space

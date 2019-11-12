@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javafx.util.Pair;
 import main.java.projectmanagers.gui.components.*;
@@ -28,6 +29,33 @@ public class GamePanel extends JPanel {
         player1Pieces = new ArrayList<>(9);
         player2Pieces = new ArrayList<>(9);
         buildBoard();
+    }
+    public void cpuDelay () throws InterruptedException {
+        TimeUnit.SECONDS.sleep(1);
+    }
+    public void cpuAddPiece(Pair<Integer, Integer> pair) {
+        for(BoardPieces blackPiece : boardPieces){
+            if(blackPiece.getXCoordinate() == pair.getKey() && blackPiece.getYCoordinate() == pair.getValue())
+                addPlayer2Piece(blackPiece);
+        }
+    }
+    public void cpuSelectPiece (Pair<Integer, Integer> pair) {
+        for (PlayerPieces playerPiece : player2Pieces) {
+            if (playerPiece.getXCoordinate() == pair.getKey() && playerPiece.getYCoordinate() == pair.getValue())
+                setSelectedPiece(playerPiece);
+        }
+    }
+    public void cpuSwapPiece (Pair<Integer, Integer> pair) {
+        for(BoardPieces blackPiece : boardPieces){
+            if(blackPiece.getXCoordinate() == pair.getKey() && blackPiece.getYCoordinate() == pair.getValue())
+                swapPlayerPiece(blackPiece, getSelectedPiece());
+        }
+    }
+    public void cpuRemovePiece(Pair<Integer, Integer> pair) {
+        for (PlayerPieces playerPiece : player1Pieces) {
+            if (playerPiece.getXCoordinate() == pair.getKey() && playerPiece.getYCoordinate() == pair.getValue())
+                millRemove(playerPiece);
+        }
     }
     // Method to remove a players piece if they are selected in a mill
     public void millRemove(PlayerPieces piece) {

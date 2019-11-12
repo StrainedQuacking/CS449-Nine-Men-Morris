@@ -1,5 +1,7 @@
 package main.java.projectmanagers.gui;
+import javafx.util.Pair;
 import main.java.projectmanagers.gui.panels.*;
+import main.java.projectmanagers.logic.AI;
 import main.java.projectmanagers.logic.Board;
 import main.java.projectmanagers.logic.GameStatuses;
 import static main.java.projectmanagers.trackers.PlayerTracking.BLUE_PLAYER;
@@ -8,6 +10,7 @@ import static main.java.projectmanagers.trackers.PlayerTracking.RED_PLAYER;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 
 public class GameBoardGui extends JFrame {
     private JPanel masterPanel;
@@ -71,17 +74,10 @@ public class GameBoardGui extends JFrame {
         buttonPanel.add(twoPlay);
         buttonPanel.add(reset);
         onePlay.addActionListener(actionEvent -> {
-            JLabel label = new JLabel("Select difficulty: ");
-            JRadioButton easy = new JRadioButton("Easy");
-            easy.setSelected(true);
-            JRadioButton medium = new JRadioButton("Medium");
-            JRadioButton hard = new JRadioButton("Hard");
-            JPanel choice = new JPanel();
-            ButtonGroup group = new ButtonGroup();
-            group.add(easy);     group.add(medium);     group.add(hard);
-            choice.add(label);  choice.add(easy);    choice.add(medium);    choice.add(hard);
-            JOptionPane.showMessageDialog(null, choice, "Difficulty", JOptionPane.QUESTION_MESSAGE);
+            player2Panel.player2Txt.setText(" CPU ");
+            GameStatuses.turn = GameStatuses.TurnsEnum.PLAYER1;
             gameType = GameStatuses.GameType.SINGLE_PLAYER;
+            showTurn();
             onePlay.setEnabled(false);
             twoPlay.setEnabled(false);
             reset.setEnabled(true);
@@ -114,7 +110,12 @@ public class GameBoardGui extends JFrame {
             pieceActions();
             gameType = GameStatuses.GameType.MENU;
             GameStatuses.turn = GameStatuses.TurnsEnum.MENU;
+            player1Play = GameStatuses.PlayerPlay.DESELECTED;
+            player2Play = GameStatuses.PlayerPlay.DESELECTED;
+            alertMessages();
+            P1hasMill = false;  P2hasMill = false;
             showTurn();
+            player2Panel.player2Txt.setText("Player 2");
             onePlay.setEnabled(true);
             twoPlay.setEnabled(true);
             reset.setEnabled(false);
@@ -244,7 +245,49 @@ public class GameBoardGui extends JFrame {
                                         }
                                         break;
                                 }
+                                break;
                             case SINGLE_PLAYER:
+                                switch(gamePlay) {
+                                    case BEGINNING:
+                                        gamePanel.showMills();
+                                        gamePanel.addPlayer1Piece(GamePanel.boardPieces.get(temp));
+                                        player1Panel.decrementTurns();
+                                        if(!(Board.isPositionMilled(x, y))) {
+                                            GameStatuses.changeTurn();
+                                            showTurn();
+                                            Pair<Integer, Integer> pair = AI.AIPlacePiece();
+                                            gamePanel.cpuAddPiece(pair);
+                                            player2Panel.decrementTurns();
+                                            if(Board.isPositionMilled(pair.getKey(), pair.getValue())) {
+                                                gamePanel.cpuRemovePiece(AI.AIRemovePiece());
+                                            }
+                                            GameStatuses.changeTurn();
+                                        }
+                                        gamePanel.showMills();
+                                        break;
+                                    case MIDDLE:
+                                        if (player1Play.equals(GameStatuses.PlayerPlay.SELECTED) && (gamePanel.canSlide(GamePanel.boardPieces.get(temp), gamePanel.getSelectedPiece()) || RED_PLAYER.getPieces() == 3)) {
+                                            gamePanel.swapPlayerPiece(GamePanel.boardPieces.get(temp), gamePanel.getSelectedPiece());
+                                            if(Board.isPositionMilled(gamePanel.getSelectedPiece().getXCoordinate(), gamePanel.getSelectedPiece().getYCoordinate())) {
+                                                player2Play = GameStatuses.PlayerPlay.MILLABLE;
+                                                P1hasMill = true;
+                                                gamePanel.showMills();
+                                            }
+                                            player1Play = GameStatuses.PlayerPlay.DESELECTED;
+                                            if(!P1hasMill) {
+                                                GameStatuses.changeTurn();
+                                                List<Pair<Integer, Integer>> list = AI.AIMovePiece(false);
+                                                gamePanel.cpuSelectPiece(list.get(0));
+                                                gamePanel.cpuSwapPiece(list.get(1));
+                                                if(Board.isPositionMilled(list.get(1).getKey(), list.get(1).getValue())) {
+                                                    gamePanel.showMills();
+                                                    gamePanel.cpuRemovePiece(AI.AIRemovePiece());
+                                                }
+                                                GameStatuses.changeTurn();
+                                            }
+                                        }
+                                        break;
+                                }
                                 break;
                         }
                     }
@@ -254,8 +297,10 @@ public class GameBoardGui extends JFrame {
                             P1hasMill = true;
                         }
                         else {
-                            player1Play = GameStatuses.PlayerPlay.MILLABLE;
-                            P2hasMill = true;
+                            if(!gameType.equals(GameStatuses.GameType.SINGLE_PLAYER)) {
+                                player1Play = GameStatuses.PlayerPlay.MILLABLE;
+                                P2hasMill = true;
+                            }
                         }
                     }
                     showTurn();
@@ -321,41 +366,61 @@ public class GameBoardGui extends JFrame {
                 @Override
                 public void mouseClicked(MouseEvent me) {
                     gamePlay = GameStatuses.getGamePlay();
-                    switch (gamePlay) {
-                        case BEGINNING:
-                            if(player2Play.equals(GameStatuses.PlayerPlay.MILLABLE) && (!GamePanel.inMill(GamePanel.player2Pieces.get(temp)) || GamePanel.noRemainingMillable())) {
-                                player2Play = GameStatuses.PlayerPlay.DESELECTED;
-                                gamePanel.millRemove(GamePanel.player2Pieces.get(temp));
-                                GameStatuses.changeTurn();
-                                P1hasMill = false;
-                                gamePanel.showMills();
-                                break;
-                            }
-                            break;
-                        case MIDDLE:
-                            switch(player2Play) {
-                                case MILLABLE:
-                                    if(!GamePanel.inMill(GamePanel.player2Pieces.get(temp)) || GamePanel.noRemainingMillable()) {
-                                        player2Play = GameStatuses.PlayerPlay.DESELECTED;
-                                        gamePanel.millRemove(GamePanel.player2Pieces.get(temp));
+                        switch (gamePlay) {
+                            case BEGINNING:
+                                if (player2Play.equals(GameStatuses.PlayerPlay.MILLABLE) && (!GamePanel.inMill(GamePanel.player2Pieces.get(temp)) || GamePanel.noRemainingMillable())) {
+                                    player2Play = GameStatuses.PlayerPlay.DESELECTED;
+                                    gamePanel.millRemove(GamePanel.player2Pieces.get(temp));
+                                    GameStatuses.changeTurn();
+                                    P1hasMill = false;
+                                    if(gameType.equals(GameStatuses.GameType.SINGLE_PLAYER)) {
+                                        Pair<Integer, Integer> pair = AI.AIPlacePiece();
+                                        gamePanel.cpuAddPiece(pair);
+                                        player2Panel.decrementTurns();
+                                        if(Board.isPositionMilled(pair.getKey(), pair.getValue())) {
+                                            gamePanel.showMills();
+                                            gamePanel.cpuRemovePiece(AI.AIRemovePiece());
+                                        }
                                         GameStatuses.changeTurn();
-                                        P1hasMill = false;
-                                        gamePanel.showMills();
                                     }
+                                    gamePanel.showMills();
                                     break;
-                                case SELECTED:
-                                    if(GameStatuses.turn.equals(GameStatuses.TurnsEnum.PLAYER2)) {
-                                        player2Play = GameStatuses.PlayerPlay.DESELECTED;
-                                        gamePanel.deselectPiece();
-                                    }
-                                    break;
-                                case DESELECTED:
-                                    if(GameStatuses.turn.equals(GameStatuses.TurnsEnum.PLAYER2) && !P2hasMill) {
-                                        player2Play = GameStatuses.PlayerPlay.SELECTED;
-                                        gamePanel.setSelectedPiece(GamePanel.player2Pieces.get(temp));
-                                    }
-                                    break;
-                            }
+                                }
+                                break;
+                            case MIDDLE:
+                                switch (player2Play) {
+                                    case MILLABLE:
+                                        if (!GamePanel.inMill(GamePanel.player2Pieces.get(temp)) || GamePanel.noRemainingMillable()) {
+                                            player2Play = GameStatuses.PlayerPlay.DESELECTED;
+                                            gamePanel.millRemove(GamePanel.player2Pieces.get(temp));
+                                            GameStatuses.changeTurn();
+                                            P1hasMill = false;
+                                            if(gameType.equals(GameStatuses.GameType.SINGLE_PLAYER)) {
+                                                List<Pair<Integer, Integer>> list = AI.AIMovePiece(false);
+                                                gamePanel.cpuSelectPiece(list.get(0));
+                                                gamePanel.cpuSwapPiece(list.get(1));
+                                                if(Board.isPositionMilled(list.get(1).getKey(), list.get(1).getValue())) {
+                                                    gamePanel.showMills();
+                                                    gamePanel.cpuRemovePiece(AI.AIRemovePiece());
+                                                }
+                                                GameStatuses.changeTurn();
+                                            }
+                                            gamePanel.showMills();
+                                        }
+                                        break;
+                                    case SELECTED:
+                                        if (GameStatuses.turn.equals(GameStatuses.TurnsEnum.PLAYER2)) {
+                                            player2Play = GameStatuses.PlayerPlay.DESELECTED;
+                                            gamePanel.deselectPiece();
+                                        }
+                                        break;
+                                    case DESELECTED:
+                                        if (GameStatuses.turn.equals(GameStatuses.TurnsEnum.PLAYER2) && !P2hasMill && !gameType.equals(GameStatuses.GameType.SINGLE_PLAYER)) {
+                                            player2Play = GameStatuses.PlayerPlay.SELECTED;
+                                            gamePanel.setSelectedPiece(GamePanel.player2Pieces.get(temp));
+                                        }
+                                        break;
+                                }
                         }
                     showTurn();
                     alertMessages();
