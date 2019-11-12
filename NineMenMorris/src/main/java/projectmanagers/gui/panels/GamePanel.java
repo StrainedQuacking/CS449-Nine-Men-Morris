@@ -33,6 +33,8 @@ public class GamePanel extends JPanel {
         player2Pieces = new ArrayList<>(9);
         buildBoard();
     }
+    // takes a pair for AI coordinates to place a piece in beginning stage
+    // adds a delay of 1 second to help time a game
     public void cpuAddPiece(Pair<Integer, Integer> pair) {
         for(BoardPieces blackPiece : boardPieces){
             if(blackPiece.getXCoordinate() == pair.getKey() && blackPiece.getYCoordinate() == pair.getValue()) {
@@ -55,6 +57,7 @@ public class GamePanel extends JPanel {
             }
         }
     }
+    // takes a pair for AI coordinates to select a piece in middle stage to swap pieces
     public void cpuSelectPiece (Pair<Integer, Integer> pair) {
         deselectPiece();
         for (PlayerPieces playerPiece : player2Pieces) {
@@ -62,6 +65,8 @@ public class GamePanel extends JPanel {
                 setSelectedPiece(playerPiece);
         }
     }
+    // takes a pair for AI coordinates to determine board piece to swap with previously selected piece
+    // adds a delay of 2 second to help time a game
     public void cpuSwapPiece (Pair<Integer, Integer> pair) {
         for(BoardPieces blackPiece : boardPieces){
             if(blackPiece.getXCoordinate() == pair.getKey() && blackPiece.getYCoordinate() == pair.getValue()) {
@@ -84,6 +89,8 @@ public class GamePanel extends JPanel {
             }
         }
     }
+    // takes a pair for AI coordinates to mill remove a player 1 piece
+    // adds a delay of 2 second to help time a game and show piece to be removed
     public void cpuRemovePiece(Pair<Integer, Integer> pair) {
         for (PlayerPieces playerPiece : player1Pieces) {
             if (playerPiece.getXCoordinate() == pair.getKey() && playerPiece.getYCoordinate() == pair.getValue()) {
