@@ -279,10 +279,6 @@ public class GameBoardGui extends JFrame {
                                                     List<Pair<Integer, Integer>> list = AI.AIMovePiece(false);
                                                     gamePanel.cpuSelectPiece(list.get(0));
                                                     gamePanel.cpuSwapPiece(list.get(1));
-                                                    if (Board.isPositionMilled(list.get(1).getKey(), list.get(1).getValue())) {
-                                                        gamePanel.showMills();
-                                                        gamePanel.cpuRemovePiece(AI.AIRemovePiece());
-                                                    }
                                                 }
                                             }
                                             break;
