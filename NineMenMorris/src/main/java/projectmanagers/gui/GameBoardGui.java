@@ -384,7 +384,7 @@ public class GameBoardGui extends JFrame {
                                             gamePanel.millRemove(GamePanel.player2Pieces.get(temp));
                                             GameStatuses.changeTurn();
                                             P1hasMill = false;
-                                            if(gameType.equals(GameStatuses.GameType.SINGLE_PLAYER)) {
+                                            if(gameType.equals(GameStatuses.GameType.SINGLE_PLAYER) && BLUE_PLAYER.getPieces() >= 3) {
                                                 List<Pair<Integer, Integer>> list = AI.AIMovePiece();
                                                 gamePanel.cpuSelectPiece(list.get(0));
                                                 gamePanel.cpuSwapPiece(list.get(1));
