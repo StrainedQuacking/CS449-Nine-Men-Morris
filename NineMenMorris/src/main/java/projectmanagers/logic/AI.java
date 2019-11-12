@@ -15,7 +15,7 @@ public class AI {
     static public Pair<Integer, Integer> AIPlacePiece() {
 
 
-        if(GameStatuses.turnCounter == 0)
+        if(GameStatuses.turnCounter == 1)
             return new Pair<>(0, 0);
         else if (GameStatuses.turnCounter == 2) {
             if (Board.boardArray.get(0).get(0).getStatus() == GameStatuses.ColorStatus.RED && Board.boardArray.get(6).get(6).getStatus() == GameStatuses.ColorStatus.EMPTY)
@@ -47,14 +47,19 @@ public class AI {
         /*
         for (int i = 0; i < myPieces.size(); i++) {
             Pair<Integer, Integer> temp = myPieces.get(i);
-            List<Pair<Integer, Integer>> adjacent = Board.adjacentPieces(temp.getValue(), temp.getValue());
+            List<Pair<Integer, Integer>> adjacent = Board.adjacentPieces(temp.getKey(), temp.getValue());
 
-            if () {
+            for (int j = 0; j < adjacent.size(); j++) {
 
+                if (Board.boardArray.get(adjacent.get(j).getKey()).get(adjacent.get(j).getValue()).getStatus() == GameStatuses.ColorStatus.EMPTY) {
 
+                    Pair<Integer, Integer> temp2 = adjacent.get(j);
+                    List<Pair<Integer, Integer>> adjacent2 = Board.adjacentPieces(temp2.getKey(), temp2.getValue());
 
+                    if (Board.boardArray.get(adjacent2.get(j).getKey()).get(adjacent2.get(j).getValue()).getStatus() == GameStatuses.ColorStatus.EMPTY)
+                        return adjacent.get(i);
+                }
             }
-
         }
         */
 
@@ -62,25 +67,48 @@ public class AI {
         return randomFree("place").get(0);
     }
 
-    static public List<Pair<Integer, Integer>> AIMovePiece(Boolean fly) {
+    static public List<Pair<Integer, Integer>> AIMovePiece() {
 
         List<Pair<Integer, Integer>> swapPieces = new ArrayList<>();
 
 
-        //if I have potential mill, move piece to the free space
+        //if I have potential mill, move piece to make the mill
 
         //else if my opponent has a potential mill, move piece to the free space
 
-        //else if I am one move away from having a potential mill, move piece to the free space
+        //else if I am one move away from setting up a mill, move piece to the free space
+        List<Pair<Integer, Integer>> myPieces = new ArrayList<>();
+        /*
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (Board.boardArray.get(i).get(j).getStatus() == GameStatuses.ColorStatus.BLUE)
+                    myPieces.add(new Pair<>(i, j));
+            }
+        }
 
-        //MAYBE: else if I am two moves away from having a potential mill, move piece to the free space
+        for (int i = 0; i < myPieces.size(); i++) {
+            Pair<Integer, Integer> temp = myPieces.get(i);
+            List<Pair<Integer, Integer>> adjacent = Board.adjacentPieces(temp.getKey(), temp.getValue());
+
+            for (int j = 0; j < adjacent.size(); j++) {
+
+                if (Board.boardArray.get(adjacent.get(j).getKey()).get(adjacent.get(j).getValue()).getStatus() == GameStatuses.ColorStatus.EMPTY) {
+
+                    Pair<Integer, Integer> temp2 = adjacent.get(j);
+                    List<Pair<Integer, Integer>> adjacent2 = Board.adjacentPieces(temp2.getKey(), temp2.getValue());
+
+                    if (Board.boardArray.get(adjacent2.get(j).getKey()).get(adjacent2.get(j).getValue()).getStatus() == GameStatuses.ColorStatus.EMPTY) {
+                        swapPieces.add(temp);
+                        swapPieces.add(adjacent.get(i));
+                        return swapPieces;
+                    }
+                }
+            }
+        }
+        */
 
         //if none are applicable, move random piece
-        if(fly)
             return randomFree("move");
-        else
-            return randomFree("move");
-
     }
 
     static public Pair<Integer, Integer> AIRemovePiece() {
@@ -98,13 +126,18 @@ public class AI {
 
         Random random = new Random();
 
-        List<Pair<Integer, Integer>> pieces = new ArrayList<>();
+        Boolean hasAdjacentFree = false;
 
         Integer randomX = random.nextInt(6);
         Integer randomY = random.nextInt(6);
 
+        List<Pair<Integer, Integer>> adjacent;
+        List<Pair<Integer, Integer>> pieces = new ArrayList<>();
+
+
         if (mode.equals("place")) {
             while (true) {
+
                 if (Board.boardArray.get(randomX).get(randomY).getStatus() == GameStatuses.ColorStatus.EMPTY) {
                     pieces.add(new Pair<>(randomX, randomY));
                     return pieces;
@@ -132,7 +165,19 @@ public class AI {
             boolean myPiece = false;
 
             while (!myPiece) {
-                if (Board.boardArray.get(randomX).get(randomY).getStatus() == GameStatuses.ColorStatus.BLUE) {
+
+                adjacent = Board.adjacentPieces(randomX, randomY);
+
+                if (BLUE_PLAYER.getPieces() > 3 && Board.boardArray.get(randomX).get(randomY).getStatus() == GameStatuses.ColorStatus.BLUE) {
+                       for (int i = 0; i < adjacent.size(); i++) {
+                           if (Board.boardArray.get(adjacent.get(i).getKey()).get(adjacent.get(i).getValue()).getStatus() == GameStatuses.ColorStatus.EMPTY)
+                               hasAdjacentFree = true;
+                       }
+                   }
+                else if (BLUE_PLAYER.getPieces() <= 3 && Board.boardArray.get(randomX).get(randomY).getStatus() == GameStatuses.ColorStatus.BLUE)
+                    hasAdjacentFree = true; //TODO:fix scoping
+
+                if (Board.boardArray.get(randomX).get(randomY).getStatus() == GameStatuses.ColorStatus.BLUE && hasAdjacentFree) {
                     pieces.add(new Pair<>(randomX, randomY));
                     myPiece = true;
                 }
@@ -156,13 +201,13 @@ public class AI {
             }
             else {
 
-                List<Pair<Integer, Integer>> adjacent = Board.adjacentPieces(randomX, randomY);
+                adjacent = Board.adjacentPieces(randomX, randomY);
 
                 for (int i = 0; i < adjacent.size(); i++) {
 
                     Pair temp = adjacent.get(i);
 
-                    if (Board.boardArray.get((Integer) temp.getValue()).get((Integer) temp.getKey()).getStatus() == GameStatuses.ColorStatus.EMPTY) {
+                    if (Board.boardArray.get((Integer) temp.getKey()).get((Integer) temp.getValue()).getStatus() == GameStatuses.ColorStatus.EMPTY) {
                         pieces.add(temp);
                         return pieces;
                     }

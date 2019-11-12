@@ -99,7 +99,7 @@ public class Board {
         if ((boardArray.get(xpos).get(ypos).getStatus() == EMPTY) && (boardArray.get(xpos).get(ypos).getStatus() != INVALID)) {
             boardArray.get(xpos).get(ypos).setStatus(updateColor);
             PLAYER_LOOKUP.get(updateColor).incrementPieces();
-
+            turnCounter++;
             return boardArray.get(xpos).get(ypos).determineMills();
         } else {
             return false;

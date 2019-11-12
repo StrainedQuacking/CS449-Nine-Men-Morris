@@ -121,6 +121,7 @@ public class GameBoardGui extends JFrame {
             reset.setEnabled(false);
             revalidate();
             repaint();
+            GameStatuses.turnCounter = 1;
         });
     }
     // alerting messages, only alerts for mills at the moment. possibility for tutorial version
@@ -276,7 +277,7 @@ public class GameBoardGui extends JFrame {
                                             player1Play = GameStatuses.PlayerPlay.DESELECTED;
                                             if(!P1hasMill) {
                                                 GameStatuses.changeTurn();
-                                                List<Pair<Integer, Integer>> list = AI.AIMovePiece(false);
+                                                List<Pair<Integer, Integer>> list = AI.AIMovePiece();
                                                 gamePanel.cpuSelectPiece(list.get(0));
                                                 gamePanel.cpuSwapPiece(list.get(1));
                                                 if(Board.isPositionMilled(list.get(1).getKey(), list.get(1).getValue())) {
@@ -396,7 +397,7 @@ public class GameBoardGui extends JFrame {
                                             GameStatuses.changeTurn();
                                             P1hasMill = false;
                                             if(gameType.equals(GameStatuses.GameType.SINGLE_PLAYER)) {
-                                                List<Pair<Integer, Integer>> list = AI.AIMovePiece(false);
+                                                List<Pair<Integer, Integer>> list = AI.AIMovePiece();
                                                 gamePanel.cpuSelectPiece(list.get(0));
                                                 gamePanel.cpuSwapPiece(list.get(1));
                                                 if(Board.isPositionMilled(list.get(1).getKey(), list.get(1).getValue())) {
