@@ -137,8 +137,11 @@ public class GameBoardGui extends JFrame {
         }
     }
     // Method initializes the board JFrame and sets up default GUI
-    public static void start() {
+    public static void start() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
         JFrame frame = new JFrame("CS 449 Project");
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        System.setProperty("com.apple.mrj.application.apple.menu.about.name", "WikiTeX");
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         frame.setResizable(true);
         frame.setContentPane(new GameBoardGui().masterPanel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
