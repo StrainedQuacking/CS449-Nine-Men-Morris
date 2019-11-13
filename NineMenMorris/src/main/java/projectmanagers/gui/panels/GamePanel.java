@@ -9,7 +9,7 @@ import java.util.Timer;
 import javafx.util.Pair;
 import main.java.projectmanagers.gui.GameBoardGui;
 import main.java.projectmanagers.gui.components.*;
-import main.java.projectmanagers.logic.AI;
+import main.java.projectmanagers.CPUPlayer.AI;
 import main.java.projectmanagers.logic.Board;
 import main.java.projectmanagers.logic.GameStatuses;
 

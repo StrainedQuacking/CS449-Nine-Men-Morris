@@ -1,7 +1,7 @@
 package main.java.projectmanagers.gui;
 import javafx.util.Pair;
 import main.java.projectmanagers.gui.panels.*;
-import main.java.projectmanagers.logic.AI;
+import main.java.projectmanagers.CPUPlayer.AI;
 import main.java.projectmanagers.logic.Board;
 import main.java.projectmanagers.logic.GameStatuses;
 import static main.java.projectmanagers.trackers.PlayerTracking.BLUE_PLAYER;
@@ -274,9 +274,9 @@ public class GameBoardGui extends JFrame {
                                                 if (!P1hasMill) {
                                                     GameStatuses.changeTurn();
                                                     showTurn();
-                                                    List<Pair<Integer, Integer>> list = AI.AIMovePiece();
-                                                    gamePanel.cpuSelectPiece(list.get(0));
-                                                    gamePanel.cpuSwapPiece(list.get(1));
+                                                    Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> movePair = AI.AIMovePiece();
+                                                    gamePanel.cpuSelectPiece(movePair.getKey());
+                                                    gamePanel.cpuSwapPiece(movePair.getValue());
                                                 }
                                             }
                                             break;
@@ -384,9 +384,9 @@ public class GameBoardGui extends JFrame {
                                             GameStatuses.changeTurn();
                                             P1hasMill = false;
                                             if(gameType.equals(GameStatuses.GameType.SINGLE_PLAYER) && BLUE_PLAYER.getPieces() >= 3) {
-                                                List<Pair<Integer, Integer>> list = AI.AIMovePiece();
-                                                gamePanel.cpuSelectPiece(list.get(0));
-                                                gamePanel.cpuSwapPiece(list.get(1));
+                                                Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> movePair = AI.AIMovePiece();
+                                                gamePanel.cpuSelectPiece(movePair.getKey());
+                                                gamePanel.cpuSwapPiece(movePair.getValue());
                                             }
                                         }
                                         break;
