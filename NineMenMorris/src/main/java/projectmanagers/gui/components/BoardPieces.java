@@ -15,7 +15,8 @@ public class BoardPieces extends JButton{
     private int x, y;
     private boolean mouseClicked = false, mouseOver = false, mousePressed = false;
     private int diameter;
-    private boolean willMove = false;
+    private Color outline = Color.black;
+    public boolean willMove = false;
 
     public BoardPieces(int x, int y) {
         this.x = x;
@@ -59,6 +60,10 @@ public class BoardPieces extends JButton{
     // accessor methods for board piece coordinates
     public int getXCoordinate () { return x; }
     public int getYCoordinate () { return y; }
+    public void setOl(Color ol) {this.outline = ol;}
+    public void beforeMove() { willMove = true; }
+    public void afterMove() { willMove = false; }
+
     private int getDiameter() {
         diameter = Math.min(getWidth(), getHeight());
         return diameter;
@@ -76,16 +81,21 @@ public class BoardPieces extends JButton{
         //Clickable display for current board position
         if (mousePressed)
             g.setColor(Color.darkGray);
+
         else
             g.setColor(Color.black);
         //fill oval will change the color of the inside of the circle
         g.fillOval(getWidth() / 2 - radius, getHeight() / 2 - radius, diameter, diameter);
         //Highlight the current board selection
         if (mouseOver && g.getColor() == Color.black && (Player1Panel.hasTurn() || Player2Panel.hasTurn() || (PlayerPieces.isSelected && (GameStatuses.turn.equals(GameStatuses.TurnsEnum.PLAYER1) && GameBoardGui.gameType.equals(GameStatuses.GameType.SINGLE_PLAYER)))) && !(GameBoardGui.P1hasMill || GameBoardGui.P2hasMill))
-            g.setColor(Color.yellow);
+            setOl(Color.yellow);
+        else if (willMove) {
+            setOl(Color.yellow);
+        }
         else
-            g.setColor(Color.black);
+            setOl(Color.black);
         //Draw oval only changes the outline of the circle
+        g.setColor(outline);
         g.drawOval((getWidth() / 2) - radius, (getHeight() / 2) - radius, diameter, diameter);
         g.setColor(Color.black);
     }

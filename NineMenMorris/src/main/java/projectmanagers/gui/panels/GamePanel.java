@@ -38,10 +38,12 @@ public class GamePanel extends JPanel {
     public void cpuAddPiece(Pair<Integer, Integer> pair) {
         for(BoardPieces blackPiece : boardPieces){
             if(blackPiece.getXCoordinate() == pair.getKey() && blackPiece.getYCoordinate() == pair.getValue()) {
+                blackPiece.beforeMove();
                 timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
+                        blackPiece.afterMove();
                         addPlayer2Piece(blackPiece);
                         GameBoardGui.player2Panel.decrementTurns();
                         if(Board.isPositionMilled(pair.getKey(), pair.getValue())) {
@@ -71,10 +73,12 @@ public class GamePanel extends JPanel {
     public void cpuSwapPiece (Pair<Integer, Integer> pair) {
         for(BoardPieces blackPiece : boardPieces){
             if(blackPiece.getXCoordinate() == pair.getKey() && blackPiece.getYCoordinate() == pair.getValue()) {
+                blackPiece.beforeMove();
                 timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
+                        blackPiece.afterMove();
                         swapPlayerPiece(blackPiece, getSelectedPiece());
                         if(Board.isPositionMilled(pair.getKey(), pair.getValue())) {
                             showMills();
@@ -221,6 +225,7 @@ public class GamePanel extends JPanel {
     // Adds a new player piece in the beginning stage of a game
     public void addPlayer1Piece(BoardPieces piece) {
         remove(piece);
+        deselectPiece();
         gbc.gridx = piece.getXCoordinate(); gbc.gridy = piece.getYCoordinate();
         player1Pieces.get(RED_PLAYER.getTurns()).setXCoordinate(piece.getXCoordinate());
         player1Pieces.get(RED_PLAYER.getTurns()).setYCoordinate(piece.getYCoordinate());
@@ -237,6 +242,8 @@ public class GamePanel extends JPanel {
         player2Pieces.get(BLUE_PLAYER.getTurns()).setYCoordinate(piece.getYCoordinate());
         player2Pieces.get(BLUE_PLAYER.getTurns()).setOL(Color.black);
         add(player2Pieces.get(BLUE_PLAYER.getTurns()), gbc);
+        if(GameBoardGui.gameType.equals(GameStatuses.GameType.SINGLE_PLAYER))
+            setSelectedPiece(player2Pieces.get(BLUE_PLAYER.getTurns()));
         Board.placePiece(piece.getXCoordinate(), piece.getYCoordinate());
         revalidate();
         repaint();
