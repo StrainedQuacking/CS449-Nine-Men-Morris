@@ -2,6 +2,7 @@ package main.java.projectmanagers.gui.components;
 
 import main.java.projectmanagers.gui.GameBoardGui;
 import main.java.projectmanagers.gui.panels.*;
+import main.java.projectmanagers.logic.GameStatuses;
 
 import javax.swing.*;
 import java.awt.Graphics;
@@ -14,6 +15,7 @@ public class BoardPieces extends JButton{
     private int x, y;
     private boolean mouseClicked = false, mouseOver = false, mousePressed = false;
     private int diameter;
+    private boolean willMove = false;
 
     public BoardPieces(int x, int y) {
         this.x = x;
@@ -79,7 +81,7 @@ public class BoardPieces extends JButton{
         //fill oval will change the color of the inside of the circle
         g.fillOval(getWidth() / 2 - radius, getHeight() / 2 - radius, diameter, diameter);
         //Highlight the current board selection
-        if (mouseOver && g.getColor() == Color.black && (Player1Panel.hasTurn() || Player2Panel.hasTurn() || PlayerPieces.isSelected) && !(GameBoardGui.P1hasMill || GameBoardGui.P2hasMill))
+        if (mouseOver && g.getColor() == Color.black && (Player1Panel.hasTurn() || Player2Panel.hasTurn() || (PlayerPieces.isSelected && (GameStatuses.turn.equals(GameStatuses.TurnsEnum.PLAYER1) && GameBoardGui.gameType.equals(GameStatuses.GameType.SINGLE_PLAYER)))) && !(GameBoardGui.P1hasMill || GameBoardGui.P2hasMill))
             g.setColor(Color.yellow);
         else
             g.setColor(Color.black);

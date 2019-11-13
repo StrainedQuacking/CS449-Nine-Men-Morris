@@ -23,7 +23,7 @@ public class GamePanel extends JPanel {
     public static ArrayList<BoardPieces> boardPieces;
     public static ArrayList<PlayerPieces> player1Pieces;
     public static ArrayList<PlayerPieces> player2Pieces;
-    private static PlayerPieces selectedPiece;
+    public static PlayerPieces selectedPiece;
     private Timer timer;
 
     public GamePanel () {
@@ -53,7 +53,7 @@ public class GamePanel extends JPanel {
                             GameBoardGui.showTurn();
                         }
                     }
-                }, 1000);
+                }, 800);
             }
         }
     }
@@ -61,8 +61,9 @@ public class GamePanel extends JPanel {
     public void cpuSelectPiece (Pair<Integer, Integer> pair) {
         deselectPiece();
         for (PlayerPieces playerPiece : player2Pieces) {
-            if (playerPiece.getXCoordinate() == pair.getKey() && playerPiece.getYCoordinate() == pair.getValue())
+            if (playerPiece.getXCoordinate() == pair.getKey() && playerPiece.getYCoordinate() == pair.getValue()) {
                 setSelectedPiece(playerPiece);
+            }
         }
     }
     // takes a pair for AI coordinates to determine board piece to swap with previously selected piece
@@ -74,7 +75,6 @@ public class GamePanel extends JPanel {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        deselectPiece();
                         swapPlayerPiece(blackPiece, getSelectedPiece());
                         if(Board.isPositionMilled(pair.getKey(), pair.getValue())) {
                             showMills();
@@ -85,7 +85,7 @@ public class GamePanel extends JPanel {
                             GameBoardGui.showTurn();
                         }
                     }
-                }, 2000);
+                }, 1500);
             }
         }
     }
@@ -104,7 +104,7 @@ public class GamePanel extends JPanel {
                         GameStatuses.changeTurn();
                         GameBoardGui.showTurn();
                     }
-                }, 2000);
+                }, 1500);
             }
         }
     }

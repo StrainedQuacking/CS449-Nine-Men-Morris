@@ -24,7 +24,7 @@ public class GameBoardGui extends JFrame {
     private GameStatuses.PlayerPlay player1Play = GameStatuses.PlayerPlay.DESELECTED;
     private GameStatuses.PlayerPlay player2Play = GameStatuses.PlayerPlay.DESELECTED;
     private GameStatuses.GamePlay gamePlay = GameStatuses.getGamePlay();
-    private GameStatuses.GameType gameType = GameStatuses.GameType.MENU;
+    public static GameStatuses.GameType gameType = GameStatuses.GameType.MENU;
 
 
     private final int MAX_HEIGHT = 600;
@@ -297,7 +297,6 @@ public class GameBoardGui extends JFrame {
                             }
                         }
                     }
-                    gamePanel.showMills();
                     showTurn();
                     alertMessages();
                 }
