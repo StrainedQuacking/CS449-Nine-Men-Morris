@@ -18,13 +18,13 @@ public class AI {
         if(GameStatuses.turnCounter == 1)
             return new Pair<>(0, 0);
         else if (GameStatuses.turnCounter == 2) {
-            if (Board.boardArray.get(0).get(0).getStatus() == GameStatuses.ColorStatus.RED && Board.boardArray.get(6).get(6).getStatus() == GameStatuses.ColorStatus.EMPTY)
+            if (Board.position(0, 0) == GameStatuses.ColorStatus.RED && Board.position(6, 6) == GameStatuses.ColorStatus.EMPTY)
                 return new Pair<>(6, 6);
-            else if (Board.boardArray.get(6).get(0).getStatus() == GameStatuses.ColorStatus.RED && Board.boardArray.get(0).get(6).getStatus() == GameStatuses.ColorStatus.EMPTY)
+            else if (Board.position(6, 0) == GameStatuses.ColorStatus.RED && Board.position(0, 6) == GameStatuses.ColorStatus.EMPTY)
                 return new Pair<>(0, 6);
-            else if (Board.boardArray.get(6).get(6).getStatus() == GameStatuses.ColorStatus.RED && Board.boardArray.get(0).get(0).getStatus() == GameStatuses.ColorStatus.EMPTY)
+            else if (Board.position(6, 6) == GameStatuses.ColorStatus.RED && Board.position(0, 0) == GameStatuses.ColorStatus.EMPTY)
                 return new Pair<>(0, 0);
-            else if (Board.boardArray.get(0).get(6).getStatus() == GameStatuses.ColorStatus.RED && Board.boardArray.get(6).get(0).getStatus() == GameStatuses.ColorStatus.EMPTY)
+            else if (Board.position(0, 6) == GameStatuses.ColorStatus.RED && Board.position(6, 0) == GameStatuses.ColorStatus.EMPTY)
                 return new Pair<>(6, 0);
         }
 
@@ -138,7 +138,7 @@ public class AI {
         if (mode.equals("place")) {
             while (true) {
 
-                if (Board.boardArray.get(randomX).get(randomY).getStatus() == GameStatuses.ColorStatus.EMPTY) {
+                if (Board.position(randomX, randomY) == GameStatuses.ColorStatus.EMPTY) {
                     pieces.add(new Pair<>(randomX, randomY));
                     return pieces;
                 }
@@ -150,7 +150,7 @@ public class AI {
         }
         else if (mode.equals("remove")) {
             while (true) {
-                if (Board.boardArray.get(randomX).get(randomY).getStatus() == GameStatuses.ColorStatus.RED) {
+                if (Board.position(randomX, randomY) == GameStatuses.ColorStatus.RED) {
                     pieces.add(new Pair<>(randomX, randomY));
                     return pieces;
                 }
@@ -168,16 +168,16 @@ public class AI {
 
                 adjacent = Board.adjacentPieces(randomX, randomY);
 
-                if (BLUE_PLAYER.getPieces() > 3 && Board.boardArray.get(randomX).get(randomY).getStatus() == GameStatuses.ColorStatus.BLUE) {
+                if (BLUE_PLAYER.getPieces() > 3 && Board.position(randomX, randomY) == GameStatuses.ColorStatus.BLUE) {
                        for (int i = 0; i < adjacent.size(); i++) {
-                           if (Board.boardArray.get(adjacent.get(i).getKey()).get(adjacent.get(i).getValue()).getStatus() == GameStatuses.ColorStatus.EMPTY)
+                           if (Board.position(adjacent.get(i).getKey(), adjacent.get(i).getValue()) == GameStatuses.ColorStatus.EMPTY)
                                hasAdjacentFree = true;
                        }
                    }
-                else if (BLUE_PLAYER.getPieces() <= 3 && Board.boardArray.get(randomX).get(randomY).getStatus() == GameStatuses.ColorStatus.BLUE)
+                else if (BLUE_PLAYER.getPieces() <= 3 && Board.position(randomX, randomY) == GameStatuses.ColorStatus.BLUE)
                     hasAdjacentFree = true; //TODO:fix scoping
 
-                if (Board.boardArray.get(randomX).get(randomY).getStatus() == GameStatuses.ColorStatus.BLUE && hasAdjacentFree) {
+                if (Board.position(randomX, randomY) == GameStatuses.ColorStatus.BLUE && hasAdjacentFree) {
                     pieces.add(new Pair<>(randomX, randomY));
                     myPiece = true;
                 }
@@ -193,7 +193,7 @@ public class AI {
                     randomX = random.nextInt(6);
                     randomY = random.nextInt(6);
 
-                    if (Board.boardArray.get(randomX).get(randomY).getStatus() == GameStatuses.ColorStatus.EMPTY) {
+                    if (Board.position(randomX, randomY) == GameStatuses.ColorStatus.EMPTY) {
                         pieces.add(new Pair<>(randomX, randomY));
                         return pieces;
                     }
@@ -207,7 +207,7 @@ public class AI {
 
                     Pair temp = adjacent.get(i);
 
-                    if (Board.boardArray.get((Integer) temp.getKey()).get((Integer) temp.getValue()).getStatus() == GameStatuses.ColorStatus.EMPTY) {
+                    if (Board.position((Integer) temp.getKey(),(Integer) temp.getValue()) == GameStatuses.ColorStatus.EMPTY) {
                         pieces.add(temp);
                         return pieces;
                     }
