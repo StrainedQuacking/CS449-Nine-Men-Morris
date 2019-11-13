@@ -73,12 +73,8 @@ public class AI {
         //if none are applicable, place a random piece
         while (true) {
             cycleRandom();
-
             if (Board.position(randomX, randomY) == EMPTY) {
                 return new Pair<>(randomX, randomY);
-            }
-            else {
-                cycleRandom();
             }
         }
     }
@@ -128,6 +124,7 @@ public class AI {
         Pair<Integer, Integer> newPosition = null;
         List<Pair<Integer, Integer>> adjacent;
 
+        // Get Current Piece
         while (currentPosition == null) {
             cycleRandom();
             adjacent = Board.adjacentPieces(randomX, randomY);
@@ -143,6 +140,8 @@ public class AI {
             }
 
         }
+
+        // Get new space
         if (BLUE_PLAYER.getPieces() <= 3) {
             while(newPosition == null) {
                 cycleRandom();
@@ -153,7 +152,7 @@ public class AI {
             }
         }
         else {
-            adjacent = Board.adjacentPieces(randomX, randomY);
+            adjacent = Board.adjacentPieces(currentPosition.getKey(), currentPosition.getValue());
 
             for (Pair pair : adjacent) {
                 if (Board.position((Integer) pair.getKey(), (Integer) pair.getValue()) == EMPTY) {
