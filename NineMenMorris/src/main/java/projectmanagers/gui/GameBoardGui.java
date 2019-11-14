@@ -148,6 +148,7 @@ public class GameBoardGui extends JFrame {
         System.setProperty("apple.laf.useScreenMenuBar", "true");
         System.setProperty("com.apple.mrj.application.apple.menu.about.name", "WikiTeX");
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        // UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         frame.setResizable(true);
         frame.setContentPane(new GameBoardGui().masterPanel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
