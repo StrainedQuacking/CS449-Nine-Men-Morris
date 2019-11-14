@@ -48,6 +48,7 @@ public class GamePanel extends JPanel {
                         GameBoardGui.player2Panel.decrementTurns();
                         if(Board.isPositionMilled(pair.getKey(), pair.getValue())) {
                             showMills();
+                            GameBoardGui.cpuAlert(true);
                             cpuRemovePiece(AI.AIRemovePiece());
                         }
                         else {
@@ -82,6 +83,7 @@ public class GamePanel extends JPanel {
                         swapPlayerPiece(blackPiece, getSelectedPiece());
                         if(Board.isPositionMilled(pair.getKey(), pair.getValue())) {
                             showMills();
+                            GameBoardGui.cpuAlert(true);
                             cpuRemovePiece(AI.AIRemovePiece());
                         }
                         else {
@@ -107,6 +109,7 @@ public class GamePanel extends JPanel {
                         millRemove(playerPiece);
                         GameStatuses.changeTurn();
                         GameBoardGui.showTurn();
+                        GameBoardGui.cpuAlert(false);
                     }
                 }, 1500);
             }

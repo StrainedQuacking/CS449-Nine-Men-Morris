@@ -15,7 +15,7 @@ import java.util.List;
 public class GameBoardGui extends JFrame {
     private JPanel masterPanel;
     private GamePanel gamePanel;
-    private TitlePanel titlePanel;
+    private static TitlePanel titlePanel;
     private ButtonPanel buttonPanel;
     private static Player1Panel player1Panel;
     public static Player2Panel player2Panel;
@@ -126,7 +126,7 @@ public class GameBoardGui extends JFrame {
         });
     }
     // alerting messages, only alerts for mills at the moment. possibility for tutorial version
-    public void alertMessages() {
+    private void alertMessages() {
         if(player2Play.equals(GameStatuses.PlayerPlay.MILLABLE))
             titlePanel.lAlert.setText("   Player 1 has a mill!");
         else if(player1Play.equals(GameStatuses.PlayerPlay.MILLABLE))
@@ -135,6 +135,12 @@ public class GameBoardGui extends JFrame {
             titlePanel.lAlert.setText("                          ");
             titlePanel.rAlert.setText("                          ");
         }
+    }
+    public static void cpuAlert(boolean call) {
+        if(call)
+            titlePanel.rAlert.setText("CPU has a mill!        ");
+        else
+            titlePanel.rAlert.setText("                          ");
     }
     // Method initializes the board JFrame and sets up default GUI
     public static void start() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
