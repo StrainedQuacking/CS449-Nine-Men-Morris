@@ -92,7 +92,9 @@ public class BoardPieces extends JButton{
         //fill oval will change the color of the inside of the circle
         g.fillOval(getWidth() / 2 - radius, getHeight() / 2 - radius, diameter, diameter);
         //Highlight the current board selection
-        if (mouseOver && g.getColor() == Color.black && (Player1Panel.hasTurn() || Player2Panel.hasTurn() || (PlayerPieces.isSelected && (GameStatuses.turn.equals(GameStatuses.TurnsEnum.PLAYER1) && GameBoardGui.gameType.equals(GameStatuses.GameType.SINGLE_PLAYER)))) && !(GameBoardGui.P1hasMill || GameBoardGui.P2hasMill))
+        if (mouseOver && g.getColor() == Color.black && (Player1Panel.hasTurn() || Player2Panel.hasTurn()
+                || (PlayerPieces.isSelected && (GameStatuses.turn.equals(GameStatuses.TurnsEnum.PLAYER1) && GameBoardGui.gameType.equals(GameStatuses.GameType.SINGLE_PLAYER) || GameBoardGui.gameType.equals(GameStatuses.GameType.TWO_PLAYER))))
+                && !(GameBoardGui.P1hasMill || GameBoardGui.P2hasMill))
             setOl(Color.yellow);
         else if (willMove) {
             setOl(Color.yellow);
