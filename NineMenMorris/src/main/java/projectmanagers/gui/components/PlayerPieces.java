@@ -4,8 +4,7 @@ import main.java.projectmanagers.gui.GameBoardGui;
 import main.java.projectmanagers.gui.panels.GamePanel;
 
 import javax.swing.*;
-import java.awt.Graphics;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -20,6 +19,9 @@ public class PlayerPieces extends JButton {
 
     public PlayerPieces(Color bg, Color outline, boolean isSelected) {
         super();
+        setOpaque(false);
+        setFocusPainted(false);
+        setBorderPainted(false);
         this.bg = bg;
         this.outline = outline;
         this.isSelected = isSelected;
@@ -83,14 +85,20 @@ public class PlayerPieces extends JButton {
         revalidate();
         repaint();
     }
+    @Override
+    public Dimension getPreferredSize(){
+        FontMetrics metrics = getGraphics().getFontMetrics(getFont());
+        int minDiameter = 10 + Math.max(metrics.stringWidth(getText()), metrics.getHeight());
+        return new Dimension(minDiameter, minDiameter);
+    }
     private int getDiameter() {
         diameter = Math.min(getWidth(), getHeight());
-        return diameter;
+        return (diameter / 2) - 5;
     }
     @Override
     public boolean contains (int x, int y) {
-        int radius = diameter / 2;
-        return Point2D.distance(x, y, getWidth() / 2, getHeight() / 2) < radius;
+        int radius = getDiameter() / 2;
+        return Point2D.distance(x, y, (getWidth() / 2), (getHeight() / 2)) < radius;
     }
     @Override
     public void paintComponent(Graphics g) {

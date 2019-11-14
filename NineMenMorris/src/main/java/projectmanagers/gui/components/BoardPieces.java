@@ -5,8 +5,7 @@ import main.java.projectmanagers.gui.panels.*;
 import main.java.projectmanagers.logic.GameStatuses;
 
 import javax.swing.*;
-import java.awt.Graphics;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -64,19 +63,25 @@ public class BoardPieces extends JButton{
     public void beforeMove() { willMove = true; }
     public void afterMove() { willMove = false; }
 
+    @Override
+    public Dimension getPreferredSize(){
+        FontMetrics metrics = getGraphics().getFontMetrics(getFont());
+        int minDiameter = 10 + Math.max(metrics.stringWidth(getText()), metrics.getHeight());
+        return new Dimension(minDiameter, minDiameter);
+    }
     private int getDiameter() {
         diameter = Math.min(getWidth(), getHeight());
-        return diameter;
+        return (diameter / 2) - 5;
     }
     @Override
     public boolean contains (int x, int y) {
         int radius = getDiameter()/2;
-        return Point2D.distance(x, y, getWidth() / 2, getHeight() / 2) < radius;
+        return Point2D.distance(x, y, (getWidth() / 2), (getHeight() / 2)) < radius;
     }
     @Override
     public void paintComponent(Graphics g) {
         diameter = getDiameter();
-        int radius = diameter/2;
+        int radius = diameter / 2;
 
         //Clickable display for current board position
         if (mousePressed)

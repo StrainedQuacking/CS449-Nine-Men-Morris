@@ -75,7 +75,7 @@ public class GameBoardGui extends JFrame {
         buttonPanel.add(twoPlay);
         buttonPanel.add(reset);
         onePlay.addActionListener(actionEvent -> {
-            player2Panel.player2Txt.setText(" CPU ");
+            player2Panel.player2Txt.setText("  CPU   ");
             GameStatuses.turn = GameStatuses.TurnsEnum.PLAYER1;
             gameType = GameStatuses.GameType.SINGLE_PLAYER;
             showTurn();
@@ -116,7 +116,7 @@ public class GameBoardGui extends JFrame {
             alertMessages();
             P1hasMill = false;  P2hasMill = false;
             showTurn();
-            player2Panel.player2Txt.setText("Player 2");
+            player2Panel.player2Txt.setText(" Player 2 ");
             onePlay.setEnabled(true);
             twoPlay.setEnabled(true);
             reset.setEnabled(false);
@@ -145,10 +145,7 @@ public class GameBoardGui extends JFrame {
     // Method initializes the board JFrame and sets up default GUI
     public static void start() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
         JFrame frame = new JFrame("CS 449 Project");
-        System.setProperty("apple.laf.useScreenMenuBar", "true");
-        System.setProperty("com.apple.mrj.application.apple.menu.about.name", "WikiTeX");
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        // UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         frame.setResizable(true);
         frame.setContentPane(new GameBoardGui().masterPanel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
