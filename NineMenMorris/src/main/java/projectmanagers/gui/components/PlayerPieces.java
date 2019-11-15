@@ -102,6 +102,7 @@ public class PlayerPieces extends JButton {
     }
     @Override
     public void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
         diameter = getDiameter();
         int radius = diameter / 2;
         g.setColor(outline);
@@ -111,6 +112,7 @@ public class PlayerPieces extends JButton {
         //
         else if(GameBoardGui.P2hasMill && bg.equals(Color.red) && mouseOver && (!outline.equals(Color.green) || GamePanel.noRemainingMillable()))
             g.setColor(Color.yellow);
+        g2.setStroke(new BasicStroke(3));
         g.drawOval((getWidth() / 2) - radius, (getHeight() / 2) - radius, diameter, diameter);
         g.setColor(bg);
         g.fillOval((getWidth() / 2) - radius, (getHeight() / 2) - radius, diameter, diameter);

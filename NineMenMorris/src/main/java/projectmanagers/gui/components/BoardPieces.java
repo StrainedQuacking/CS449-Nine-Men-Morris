@@ -80,17 +80,18 @@ public class BoardPieces extends JButton{
     }
     @Override
     public void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
         diameter = getDiameter();
         int radius = diameter / 2;
 
         //Clickable display for current board position
         if (mousePressed)
-            g.setColor(Color.darkGray);
+            g2.setColor(Color.darkGray);
 
         else
-            g.setColor(Color.black);
+            g2.setColor(Color.black);
         //fill oval will change the color of the inside of the circle
-        g.fillOval(getWidth() / 2 - radius, getHeight() / 2 - radius, diameter, diameter);
+        g2.fillOval(getWidth() / 2 - radius, getHeight() / 2 - radius, diameter, diameter);
         //Highlight the current board selection
         if (mouseOver && g.getColor() == Color.black && (Player1Panel.hasTurn() || Player2Panel.hasTurn()
                 || (PlayerPieces.isSelected && (GameStatuses.turn.equals(GameStatuses.TurnsEnum.PLAYER1) && GameBoardGui.gameType.equals(GameStatuses.GameType.SINGLE_PLAYER) || GameBoardGui.gameType.equals(GameStatuses.GameType.TWO_PLAYER))))
@@ -102,9 +103,10 @@ public class BoardPieces extends JButton{
         else
             setOl(Color.black);
         //Draw oval only changes the outline of the circle
-        g.setColor(outline);
-        g.drawOval((getWidth() / 2) - radius, (getHeight() / 2) - radius, diameter, diameter);
-        g.setColor(Color.black);
+        g2.setStroke(new BasicStroke(2));
+        g2.setColor(outline);
+        g2.drawOval((getWidth() / 2) - radius, (getHeight() / 2) - radius, diameter, diameter);
+        g2.setColor(Color.black);
     }
 }
 
