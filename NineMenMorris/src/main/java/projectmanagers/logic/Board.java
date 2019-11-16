@@ -1,6 +1,7 @@
 package main.java.projectmanagers.logic;
 
 import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,13 +25,14 @@ public class Board {
         boardArray.clear();
         startingBoard();
     }
+
     // Constructs the data structure for the initial board
     // Constructs the data structure for the initial board
     static void startingBoard() {
 
-        for (int i = 0; i < 7; i++){
+        for (int i = 0; i < 7; i++) {
             boardArray.add(new ArrayList<>());
-            for (int j = 0; j < 7; j++){
+            for (int j = 0; j < 7; j++) {
                 boardArray.get(i).add(new Position());
             }
         }
@@ -140,8 +142,8 @@ public class Board {
         for (int xpos = 0; xpos < 7; xpos++) {
             for (int ypos = 0; ypos < 7; ypos++) {
                 List<Pair<Integer, Integer>> adjacent = adjacentPieces(xpos, ypos);
-                for (Pair<Integer, Integer> pair : adjacent){
-                    if ((Board.position(xpos, ypos) == playerTurn) && Board.position(pair.getKey(), pair.getValue()) == EMPTY){
+                for (Pair<Integer, Integer> pair : adjacent) {
+                    if ((Board.position(xpos, ypos) == playerTurn) && Board.position(pair.getKey(), pair.getValue()) == EMPTY) {
                         return false;
                     }
                 }
@@ -160,13 +162,11 @@ public class Board {
                 if (xpos == 0) {
                     adjacentPieces.add(new Pair<>(3, 0));
                     adjacentPieces.add(new Pair<>(0, 3));
-                }
-                else if (xpos == 3) {
+                } else if (xpos == 3) {
                     adjacentPieces.add(new Pair<>(0, 0));
                     adjacentPieces.add(new Pair<>(6, 0));
                     adjacentPieces.add(new Pair<>(3, 1));
-                }
-                else if (xpos == 6) {
+                } else if (xpos == 6) {
                     adjacentPieces.add(new Pair<>(3, 0));
                     adjacentPieces.add(new Pair<>(6, 3));
                 }
@@ -175,14 +175,12 @@ public class Board {
                 if (xpos == 1) {
                     adjacentPieces.add(new Pair<>(1, 3));
                     adjacentPieces.add(new Pair<>(3, 1));
-                }
-                else if (xpos == 3) {
+                } else if (xpos == 3) {
                     adjacentPieces.add(new Pair<>(3, 0));
                     adjacentPieces.add(new Pair<>(1, 1));
                     adjacentPieces.add(new Pair<>(5, 1));
                     adjacentPieces.add(new Pair<>(3, 2));
-                }
-                else if (xpos == 5) {
+                } else if (xpos == 5) {
                     adjacentPieces.add(new Pair<>(3, 1));
                     adjacentPieces.add(new Pair<>(5, 3));
                 }
@@ -191,13 +189,11 @@ public class Board {
                 if (xpos == 2) {
                     adjacentPieces.add(new Pair<>(2, 3));
                     adjacentPieces.add(new Pair<>(3, 2));
-                }
-                else if (xpos == 3) {
+                } else if (xpos == 3) {
                     adjacentPieces.add(new Pair<>(2, 2));
                     adjacentPieces.add(new Pair<>(3, 1));
                     adjacentPieces.add(new Pair<>(4, 2));
-                }
-                else if (xpos == 4) {
+                } else if (xpos == 4) {
                     adjacentPieces.add(new Pair<>(3, 2));
                     adjacentPieces.add(new Pair<>(4, 3));
                 }
@@ -207,30 +203,25 @@ public class Board {
                     adjacentPieces.add(new Pair<>(0, 0));
                     adjacentPieces.add(new Pair<>(0, 6));
                     adjacentPieces.add(new Pair<>(1, 3));
-                }
-                else if (xpos == 1) {
+                } else if (xpos == 1) {
                     adjacentPieces.add(new Pair<>(0, 3));
                     adjacentPieces.add(new Pair<>(1, 1));
                     adjacentPieces.add(new Pair<>(1, 5));
                     adjacentPieces.add(new Pair<>(2, 3));
-                }
-                else if (xpos == 2) {
+                } else if (xpos == 2) {
                     adjacentPieces.add(new Pair<>(1, 3));
                     adjacentPieces.add(new Pair<>(2, 2));
                     adjacentPieces.add(new Pair<>(2, 4));
-                }
-                else if (xpos == 4) {
+                } else if (xpos == 4) {
                     adjacentPieces.add(new Pair<>(5, 3));
                     adjacentPieces.add(new Pair<>(4, 2));
                     adjacentPieces.add(new Pair<>(4, 4));
-                }
-                else if (xpos == 5) {
+                } else if (xpos == 5) {
                     adjacentPieces.add(new Pair<>(4, 3));
                     adjacentPieces.add(new Pair<>(5, 1));
                     adjacentPieces.add(new Pair<>(5, 5));
                     adjacentPieces.add(new Pair<>(6, 3));
-                }
-                else if (xpos == 6) {
+                } else if (xpos == 6) {
                     adjacentPieces.add(new Pair<>(5, 3));
                     adjacentPieces.add(new Pair<>(6, 0));
                     adjacentPieces.add(new Pair<>(6, 6));
@@ -240,13 +231,11 @@ public class Board {
                 if (xpos == 2) {
                     adjacentPieces.add(new Pair<>(2, 3));
                     adjacentPieces.add(new Pair<>(3, 4));
-                }
-                else if (xpos == 3) {
+                } else if (xpos == 3) {
                     adjacentPieces.add(new Pair<>(2, 4));
                     adjacentPieces.add(new Pair<>(3, 5));
                     adjacentPieces.add(new Pair<>(4, 4));
-                }
-                else if (xpos == 4) {
+                } else if (xpos == 4) {
                     adjacentPieces.add(new Pair<>(3, 4));
                     adjacentPieces.add(new Pair<>(4, 3));
                 }
@@ -255,14 +244,12 @@ public class Board {
                 if (xpos == 1) {
                     adjacentPieces.add(new Pair<>(1, 3));
                     adjacentPieces.add(new Pair<>(3, 5));
-                }
-                else if (xpos == 3) {
+                } else if (xpos == 3) {
                     adjacentPieces.add(new Pair<>(3, 6));
                     adjacentPieces.add(new Pair<>(1, 5));
                     adjacentPieces.add(new Pair<>(5, 5));
                     adjacentPieces.add(new Pair<>(3, 4));
-                }
-                else if (xpos == 5) {
+                } else if (xpos == 5) {
                     adjacentPieces.add(new Pair<>(3, 5));
                     adjacentPieces.add(new Pair<>(5, 3));
                 }
@@ -271,13 +258,11 @@ public class Board {
                 if (xpos == 0) {
                     adjacentPieces.add(new Pair<>(3, 6));
                     adjacentPieces.add(new Pair<>(0, 3));
-                }
-                else if (xpos == 3) {
+                } else if (xpos == 3) {
                     adjacentPieces.add(new Pair<>(0, 6));
                     adjacentPieces.add(new Pair<>(6, 6));
                     adjacentPieces.add(new Pair<>(3, 5));
-                }
-                else if (xpos == 6) {
+                } else if (xpos == 6) {
                     adjacentPieces.add(new Pair<>(3, 6));
                     adjacentPieces.add(new Pair<>(6, 3));
                 }
@@ -293,7 +278,7 @@ public class Board {
         List<Pair<Integer, Integer>> mills = new ArrayList<>();
         for (int xpos = 0; xpos < 7; xpos++) {
             for (int ypos = 0; ypos < 7; ypos++) {
-                if (Board.boardArray.get(xpos).get(ypos).isMilled()){
+                if (Board.boardArray.get(xpos).get(ypos).isMilled()) {
                     mills.add(new Pair<>(xpos, ypos));
                 }
             }

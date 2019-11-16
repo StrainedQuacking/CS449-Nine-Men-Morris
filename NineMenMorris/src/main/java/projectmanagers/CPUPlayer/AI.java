@@ -22,7 +22,7 @@ public class AI {
     static public Pair<Integer, Integer> AIPlacePiece() {
 
 
-        if(GameStatuses.turnCounter == 1)
+        if (GameStatuses.turnCounter == 1)
             return new Pair<>(0, 0);
         else if (GameStatuses.turnCounter == 2) {
             if (Board.position(0, 0) == RED && Board.position(6, 6) == EMPTY)
@@ -126,16 +126,18 @@ public class AI {
 
         // Get Current Piece
         while (currentPosition == null) {
-            cycleRandom();
+            while (Board.position(randomX, randomY) != BLUE) {
+                cycleRandom();
+            }
             adjacent = Board.adjacentPieces(randomX, randomY);
 
-            if (BLUE_PLAYER.getPieces() > 3 && Board.position(randomX, randomY) == BLUE) {
+            if (BLUE_PLAYER.getPieces() > 3) {
                 for (Pair<Integer, Integer> pair : adjacent) {
                     if (Board.position(pair.getKey(), pair.getValue()) == EMPTY) {
                         currentPosition = new Pair<>(randomX, randomY);
                     }
                 }
-            } else if (BLUE_PLAYER.getPieces() <= 3 && Board.position(randomX, randomY) == BLUE) {
+            } else if (BLUE_PLAYER.getPieces() <= 3) {
                 currentPosition = new Pair<>(randomX, randomY);
             }
 
@@ -143,15 +145,14 @@ public class AI {
 
         // Get new space
         if (BLUE_PLAYER.getPieces() <= 3) {
-            while(newPosition == null) {
+            while (newPosition == null) {
                 cycleRandom();
 
                 if (Board.position(randomX, randomY) == EMPTY) {
                     newPosition = new Pair<>(randomX, randomY);
                 }
             }
-        }
-        else {
+        } else {
             adjacent = Board.adjacentPieces(currentPosition.getKey(), currentPosition.getValue());
 
             for (Pair pair : adjacent) {
@@ -174,8 +175,7 @@ public class AI {
         while (true) {
             if (Board.position(randomX, randomY) == RED) {
                 return new Pair<>(randomX, randomY);
-            }
-            else {
+            } else {
                 cycleRandom();
             }
         }
@@ -185,10 +185,10 @@ public class AI {
         Random random = new Random();
         boolean cycler = true;
 
-        while(cycler) {
+        while (cycler) {
             randomX = random.nextInt(6);
             randomY = random.nextInt(6);
-            if (!(Board.position(randomX, randomY) == INVALID)){
+            if (!(Board.position(randomX, randomY) == INVALID)) {
                 cycler = false;
             }
         }
