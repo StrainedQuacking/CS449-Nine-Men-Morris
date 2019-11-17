@@ -21,12 +21,92 @@ public class Board {
         startingBoard();
     }
 
+    // Returns the ColorStatus of the given xpos ypos
+    static public ColorStatus position(int xpos, int ypos) {
+        return boardArray.get(xpos).get(ypos).getStatus();
+    }
+
     public static void reset() {
         boardArray.clear();
+        boardMills.clear();
         startingBoard();
     }
 
-    // Constructs the data structure for the initial board
+    // Places a colored piece on the given xpos and ypos based on the current turn
+    static public boolean placePiece(int xpos, int ypos) {
+        ColorStatus updateColor;
+        if (turn == PLAYER1) {
+            updateColor = RED;
+        } else {
+            updateColor = BLUE;
+        }
+
+        if ((position(xpos, ypos) == EMPTY) && (position(xpos, ypos) != INVALID)) {
+            boardArray.get(xpos).get(ypos).setStatus(updateColor);
+            PLAYER_LOOKUP.get(updateColor).addPlacedPiece(xpos, ypos);
+            PLAYER_LOOKUP.get(updateColor).incrementPieces();
+            turnCounter++;
+            return boardArray.get(xpos).get(ypos).determineMills();
+        } else {
+            return false;
+        }
+    }
+
+    // Removes the given piece and replaces it with EMPTY
+    static public boolean remove(int xpos, int ypos) {
+        if (position(xpos, ypos) != EMPTY && position(xpos, ypos) != INVALID) {
+            ColorStatus updateColor = position(xpos, ypos);
+
+            PLAYER_LOOKUP.get(updateColor).removePlacedPiece(xpos, ypos);
+            PLAYER_LOOKUP.get(updateColor).decrementPieces();
+            boardArray.get(xpos).get(ypos).removePiece();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Returns whether or not any positions of the turn color have an open adjacent position
+    static public boolean noEmptyAdjacentPositions() {
+        ColorStatus playerTurn;
+        int emptySpaces = 0;
+        if (turn == PLAYER1) {
+            playerTurn = RED;
+        } else {
+            playerTurn = BLUE;
+        }
+
+        for (int xpos = 0; xpos < 7; xpos++) {
+            for (int ypos = 0; ypos < 7; ypos++) {
+                List<Pair<Integer, Integer>> adjacent = adjacentPieces(xpos, ypos);
+                for (Pair<Integer, Integer> pair : adjacent) {
+                    if ((Board.position(xpos, ypos) == playerTurn) && Board.position(pair.getKey(), pair.getValue()) == EMPTY) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    // Returns the isMilled status of the given xpos ypos
+    static public boolean isPositionMilled(int xpos, int ypos) {
+        return boardArray.get(xpos).get(ypos).isMilled();
+    }
+
+    // Returns all pieces in a milled position on the board
+    static public List<Pair<Integer, Integer>> getMilledPieces() {
+        List<Pair<Integer, Integer>> mills = new ArrayList<>();
+        for (int xpos = 0; xpos < 7; xpos++) {
+            for (int ypos = 0; ypos < 7; ypos++) {
+                if (Board.boardArray.get(xpos).get(ypos).isMilled()) {
+                    mills.add(new Pair<>(xpos, ypos));
+                }
+            }
+        }
+        return mills;
+    }
+
     // Constructs the data structure for the initial board
     static void startingBoard() {
 
@@ -87,69 +167,6 @@ public class Board {
         boardArray.get(6).get(3).initialize(boardMills.get(7), boardMills.get(12));
         boardArray.get(6).get(6).initialize(boardMills.get(7), boardMills.get(15));
 
-    }
-
-    // Places a colored piece on the given xpos and ypos based on the current turn
-    static public boolean placePiece(int xpos, int ypos) {
-        ColorStatus updateColor;
-        if (turn == PLAYER1) {
-            updateColor = RED;
-        } else {
-            updateColor = BLUE;
-        }
-
-        if ((boardArray.get(xpos).get(ypos).getStatus() == EMPTY) && (boardArray.get(xpos).get(ypos).getStatus() != INVALID)) {
-            boardArray.get(xpos).get(ypos).setStatus(updateColor);
-            PLAYER_LOOKUP.get(updateColor).incrementPieces();
-            turnCounter++;
-            return boardArray.get(xpos).get(ypos).determineMills();
-        } else {
-            return false;
-        }
-    }
-
-    // Removes the given piece and replaces it with EMPTY
-    static public boolean remove(int xpos, int ypos) {
-        if (boardArray.get(xpos).get(ypos).getStatus() != EMPTY && boardArray.get(xpos).get(ypos).getStatus() != INVALID) {
-            PLAYER_LOOKUP.get(boardArray.get(xpos).get(ypos).getStatus()).decrementPieces();
-            boardArray.get(xpos).get(ypos).removePiece();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // Returns the ColorStatus of the given xpos ypos
-    static public ColorStatus position(int xpos, int ypos) {
-        return boardArray.get(xpos).get(ypos).getStatus();
-    }
-
-    // Returns the isMilled status of the given xpos ypos
-    static public boolean isPositionMilled(int xpos, int ypos) {
-        return boardArray.get(xpos).get(ypos).isMilled();
-    }
-
-    // Returns whether or not any positions of the turn color have an open adjacent position
-    static public boolean noEmptyAdjacentPositions() {
-        ColorStatus playerTurn;
-        int emptySpaces = 0;
-        if (turn == PLAYER1) {
-            playerTurn = RED;
-        } else {
-            playerTurn = BLUE;
-        }
-
-        for (int xpos = 0; xpos < 7; xpos++) {
-            for (int ypos = 0; ypos < 7; ypos++) {
-                List<Pair<Integer, Integer>> adjacent = adjacentPieces(xpos, ypos);
-                for (Pair<Integer, Integer> pair : adjacent) {
-                    if ((Board.position(xpos, ypos) == playerTurn) && Board.position(pair.getKey(), pair.getValue()) == EMPTY) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
     }
 
     // Returns the adjacent positions to a given xpos ypos
@@ -273,16 +290,4 @@ public class Board {
         return adjacentPieces;
     }
 
-    // Returns all pieces in a milled position on the board
-    static public List<Pair<Integer, Integer>> getMilledPieces() {
-        List<Pair<Integer, Integer>> mills = new ArrayList<>();
-        for (int xpos = 0; xpos < 7; xpos++) {
-            for (int ypos = 0; ypos < 7; ypos++) {
-                if (Board.boardArray.get(xpos).get(ypos).isMilled()) {
-                    mills.add(new Pair<>(xpos, ypos));
-                }
-            }
-        }
-        return mills;
-    }
 }
