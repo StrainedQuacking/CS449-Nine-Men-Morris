@@ -13,7 +13,7 @@ import static main.java.projectmanagers.trackers.PlayerTracking.RED_PLAYER;
 
 public class AI {
 
-    static private Pair<Integer, Integer> NO_PLACE = new Pair<>(-1, -1);
+    static public Pair<Integer, Integer> NO_PLACE = new Pair<>(-1, -1);
 
     static public Pair<Integer, Integer> AIPlacePiece() {
 
@@ -65,7 +65,7 @@ public class AI {
         }
         */
 
-        //if none are applicable, place a random piece
+        // Basic mill placing or Random piece
 
         myPiece = DetermineMove.placementMills(BLUE);
         if (myPiece.equals(NO_PLACE)){
@@ -120,6 +120,11 @@ public class AI {
         */
 
         //if none are applicable, move random piece
+        Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> currNew = DetermineMove.movementMills(BLUE);
+        if (!(currNew.getKey().equals(NO_PLACE))) {
+            return currNew;
+        }
+
         Pair<Integer, Integer> currentPosition = null;
         Pair<Integer, Integer> newPosition = null;
         List<Pair<Integer, Integer>> adjacent;
@@ -165,6 +170,13 @@ public class AI {
         //MAYBE: else if my opponent is two moves away from a potential mill, remove that piece
 
         //else, remove a random piece of my opponents
+        List<Pair<Integer, Integer>> enemyPieces = RED_PLAYER.getPlacedPieces();
+        for (Pair<Integer, Integer> piece : enemyPieces) {
+            if ((Board.isPositionCloseToMilled(piece.getKey(), piece.getValue())).equals(EMPTY)) {
+                return piece;
+            }
+        }
+
         return RED_PLAYER.getRandomPiece();
     }
 

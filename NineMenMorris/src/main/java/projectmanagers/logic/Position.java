@@ -60,17 +60,25 @@ public class Position {
         return (mill1 || mill2);
     }
 
+    // Returns a color if the position is EMPTY and almost a mill
+    // Returns INVALID if neither mill is valid and the piece is empty
+    // Returns EMPTY if the piece is already placed but is also in a 2/3 mill
     public ColorStatus closeToMilled() {
-        if (!colorStatus.equals(EMPTY)){
-            return INVALID;
-        }
         ColorStatus mill1 = millConditionsX.closeToMilled();
         ColorStatus mill2 = millConditionsY.closeToMilled();
 
         if (mill1.equals(INVALID)) {
-            return mill2;
+            if (colorStatus.equals(EMPTY)) {
+                return mill2;
+            } else {
+                return EMPTY;
+            }
         } else {
-            return mill1;
+            if (colorStatus.equals(EMPTY)) {
+                return mill1;
+            } else {
+                return EMPTY;
+            }
         }
     }
 }
