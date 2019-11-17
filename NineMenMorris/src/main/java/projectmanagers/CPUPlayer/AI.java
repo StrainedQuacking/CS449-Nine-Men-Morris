@@ -126,21 +126,21 @@ public class AI {
 
         // Get Current Piece
         while (currentPosition == null) {
-            while (Board.position(randomX, randomY) != BLUE) {
-                cycleRandom();
-            }
+            cycleRandom();
+
             adjacent = Board.adjacentPieces(randomX, randomY);
 
-            if (BLUE_PLAYER.getPieces() > 3) {
-                for (Pair<Integer, Integer> pair : adjacent) {
-                    if (Board.position(pair.getKey(), pair.getValue()) == EMPTY) {
-                        currentPosition = new Pair<>(randomX, randomY);
+            if (Board.position(randomX, randomY).equals(BLUE)) {
+                if (BLUE_PLAYER.getPieces() > 3) {
+                    for (Pair<Integer, Integer> pair : adjacent) {
+                        if (Board.position(pair.getKey(), pair.getValue()) == EMPTY) {
+                            currentPosition = new Pair<>(randomX, randomY);
+                        }
                     }
+                } else if (BLUE_PLAYER.getPieces() <= 3) {
+                    currentPosition = new Pair<>(randomX, randomY);
                 }
-            } else if (BLUE_PLAYER.getPieces() <= 3) {
-                currentPosition = new Pair<>(randomX, randomY);
             }
-
         }
 
         // Get new space
@@ -155,8 +155,8 @@ public class AI {
         } else {
             adjacent = Board.adjacentPieces(currentPosition.getKey(), currentPosition.getValue());
 
-            for (Pair pair : adjacent) {
-                if (Board.position((Integer) pair.getKey(), (Integer) pair.getValue()) == EMPTY) {
+            for (Pair<Integer, Integer> pair : adjacent) {
+                if (Board.position(pair.getKey(), pair.getValue()) == EMPTY) {
                     newPosition = pair;
                     break;
                 }
