@@ -59,4 +59,18 @@ public class Position {
         boolean mill2 = millConditionsY.isMilled();
         return (mill1 || mill2);
     }
+
+    public ColorStatus closeToMilled() {
+        if (!colorStatus.equals(EMPTY)){
+            return INVALID;
+        }
+        ColorStatus mill1 = millConditionsX.closeToMilled();
+        ColorStatus mill2 = millConditionsY.closeToMilled();
+
+        if (mill1.equals(INVALID)) {
+            return mill2;
+        } else {
+            return mill1;
+        }
+    }
 }

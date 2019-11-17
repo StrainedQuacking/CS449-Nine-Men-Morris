@@ -7,12 +7,13 @@ import main.java.projectmanagers.logic.GameStatuses;
 import java.util.ArrayList;
 import java.util.List;
 
-import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.EMPTY;
-import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.RED;
+import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.*;
 import static main.java.projectmanagers.trackers.PlayerTracking.BLUE_PLAYER;
 import static main.java.projectmanagers.trackers.PlayerTracking.RED_PLAYER;
 
 public class AI {
+
+    static private Pair<Integer, Integer> NO_PLACE = new Pair<>(-1, -1);
 
     static public Pair<Integer, Integer> AIPlacePiece() {
 
@@ -30,7 +31,7 @@ public class AI {
         }
 
 
-        List<Pair<Integer, Integer>> myPieces = new ArrayList<>();
+        Pair<Integer, Integer> myPiece;
 
 //        for (int i = 0; i < 7; i++) {
 //            for (int j = 0; i < 7; j++) {
@@ -65,7 +66,17 @@ public class AI {
         */
 
         //if none are applicable, place a random piece
-        return Board.getRandomEmptyPosition();
+
+        myPiece = DetermineMove.placementMills(BLUE);
+        if (myPiece.equals(NO_PLACE)){
+            myPiece = DetermineMove.placementMills(RED);
+        }
+        if (myPiece.equals(NO_PLACE)) {
+            return Board.getRandomEmptyPosition();
+        } else {
+            return myPiece;
+        }
+
     }
 
     static public Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> AIMovePiece() {
