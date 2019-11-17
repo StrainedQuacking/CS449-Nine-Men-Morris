@@ -71,7 +71,7 @@ public class Player {
         placedPieces.remove(new Pair<>(xpos, ypos));
     }
 
-    public Pair<Integer, Integer> randomPiece() {
+    public Pair<Integer, Integer> getRandomPiece() {
         if (placedPieces.isEmpty()){
             return new Pair<>(-1, -1);
         }

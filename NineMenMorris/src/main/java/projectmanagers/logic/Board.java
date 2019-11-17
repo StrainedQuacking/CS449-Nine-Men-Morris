@@ -5,6 +5,7 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import static main.java.projectmanagers.logic.GameStatuses.*;
 import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.*;
@@ -16,9 +17,10 @@ public class Board {
 
     static private List<List<Position>> boardArray = new ArrayList<>();
     static private List<MillConditions> boardMills = new ArrayList<>();
+    static private List<Pair<Integer, Integer>> emptyPieces = new ArrayList<>();
 
     public Board() {
-        startingBoard();
+        reset();
     }
 
     // Returns the ColorStatus of the given xpos ypos
@@ -29,6 +31,7 @@ public class Board {
     public static void reset() {
         boardArray.clear();
         boardMills.clear();
+        emptyPieces.clear();
         startingBoard();
     }
 
@@ -44,7 +47,9 @@ public class Board {
         if ((position(xpos, ypos) == EMPTY) && (position(xpos, ypos) != INVALID)) {
             boardArray.get(xpos).get(ypos).setStatus(updateColor);
             PLAYER_LOOKUP.get(updateColor).addPlacedPiece(xpos, ypos);
+            emptyPieces.remove(new Pair<>(xpos, ypos));
             PLAYER_LOOKUP.get(updateColor).incrementPieces();
+
             turnCounter++;
             return boardArray.get(xpos).get(ypos).determineMills();
         } else {
@@ -58,6 +63,7 @@ public class Board {
             ColorStatus updateColor = position(xpos, ypos);
 
             PLAYER_LOOKUP.get(updateColor).removePlacedPiece(xpos, ypos);
+            emptyPieces.add(new Pair<>(xpos, ypos));
             PLAYER_LOOKUP.get(updateColor).decrementPieces();
             boardArray.get(xpos).get(ypos).removePiece();
             return true;
@@ -105,6 +111,17 @@ public class Board {
             }
         }
         return mills;
+    }
+
+    // Returns all empty pieces on the board
+    static public List<Pair<Integer, Integer>> getEmptyPieces() {
+        return new ArrayList<>(emptyPieces);
+    }
+
+    // Returns a random pair of coordinates for an empty space
+    static public Pair<Integer, Integer> getRandomEmptyPosition() {
+        Random rand = new Random();
+        return emptyPieces.get(rand.nextInt(emptyPieces.size()));
     }
 
     // Constructs the data structure for the initial board
@@ -167,6 +184,13 @@ public class Board {
         boardArray.get(6).get(3).initialize(boardMills.get(7), boardMills.get(12));
         boardArray.get(6).get(6).initialize(boardMills.get(7), boardMills.get(15));
 
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (position(i, j).equals(EMPTY)){
+                    emptyPieces.add(new Pair<>(i, j));
+                }
+            }
+        }
     }
 
     // Returns the adjacent positions to a given xpos ypos
