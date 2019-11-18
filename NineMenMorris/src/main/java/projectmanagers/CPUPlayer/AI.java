@@ -7,14 +7,17 @@ import main.java.projectmanagers.logic.GameStatuses;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.*;
+
 import static main.java.projectmanagers.trackers.PlayerTracking.BLUE_PLAYER;
 import static main.java.projectmanagers.trackers.PlayerTracking.RED_PLAYER;
 
 public class AI {
 
-    static public Pair<Integer, Integer> NO_PLACE = new Pair<>(-1, -1);
 
+    static public Pair<Integer, Integer> NO_PLACE = new Pair<>(-1, -1);
+  
     static public Pair<Integer, Integer> AIPlacePiece() {
 
         if (GameStatuses.turnCounter == 1)
@@ -65,6 +68,7 @@ public class AI {
         }
         */
 
+
         // Basic mill placing or Random piece
 
         myPiece = DetermineMove.placementMills(BLUE);
@@ -76,6 +80,7 @@ public class AI {
         } else {
             return myPiece;
         }
+
 
     }
 
@@ -176,6 +181,7 @@ public class AI {
                 return piece;
             }
         }
+
 
         return RED_PLAYER.getRandomPiece();
     }
