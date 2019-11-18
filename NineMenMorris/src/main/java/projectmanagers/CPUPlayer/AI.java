@@ -6,12 +6,13 @@ import main.java.projectmanagers.logic.GameStatuses;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Random;
 
 import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.*;
 
 import static main.java.projectmanagers.trackers.PlayerTracking.BLUE_PLAYER;
 import static main.java.projectmanagers.trackers.PlayerTracking.RED_PLAYER;
+import static main.java.projectmanagers.trackers.PlayerTracking.*;
 
 public class AI {
 
@@ -76,7 +77,7 @@ public class AI {
             myPiece = DetermineMove.placementMills(RED);
         }
         if (myPiece.equals(NO_PLACE)) {
-            return Board.getRandomEmptyPosition();
+            return getRandom(EMPTY);
         } else {
             return myPiece;
         }
@@ -137,7 +138,7 @@ public class AI {
         boolean hasEmpty = false;
         // Get Current Piece
         while (!hasEmpty) {
-            currentPosition = BLUE_PLAYER.getRandomPiece();
+            currentPosition = getRandom(BLUE);
             adjacent = Board.adjacentPieces(currentPosition.getKey(), currentPosition.getValue());
 
             if (BLUE_PLAYER.getPieces() > 3) {
@@ -154,7 +155,7 @@ public class AI {
 
         // Get new space
         if (BLUE_PLAYER.getPieces() <= 3) {
-            newPosition = Board.getRandomEmptyPosition();
+            newPosition = getRandom(EMPTY);
         } else {
             adjacent = Board.adjacentPieces(currentPosition.getKey(), currentPosition.getValue());
 
@@ -165,6 +166,8 @@ public class AI {
                 }
             }
         }
+
+
         return new Pair<>(currentPosition, newPosition);
     }
 
@@ -182,8 +185,22 @@ public class AI {
             }
         }
 
-
-        return RED_PLAYER.getRandomPiece();
+        return getRandom(RED);
     }
 
+    static public Pair<Integer, Integer> getRandom(GameStatuses.ColorStatus color) {
+
+        Random rand = new Random();
+        int randInt = 0;
+
+        if (color.equals(EMPTY)) {
+            randInt = rand.nextInt(Board.getEmptyPieces().size());
+            return Board.getEmptyPieces().get(randInt);
+        } else {
+            List<Pair<Integer, Integer>> piecesList = PLAYER_LOOKUP.get(color).getPlacedPieces();
+            randInt = rand.nextInt(piecesList.size());
+            return piecesList.get(randInt);
+        }
+
+    }
 }

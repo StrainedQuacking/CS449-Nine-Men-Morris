@@ -18,7 +18,10 @@ public class GameStatuses {
 
     public enum TurnsEnum {PLAYER1, PLAYER2, MENU}
 
+    public enum GameDifficulty {BEGINNER, EASY, MEDIUM}
+
     public static TurnsEnum turn = TurnsEnum.MENU;
+
     public static int turnCounter = 1;
 
     // Returns the stage of the game

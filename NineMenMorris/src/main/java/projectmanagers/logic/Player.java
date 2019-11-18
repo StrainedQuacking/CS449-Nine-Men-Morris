@@ -71,11 +71,4 @@ public class Player {
         placedPieces.remove(new Pair<>(xpos, ypos));
     }
 
-    public Pair<Integer, Integer> getRandomPiece() {
-        if (placedPieces.isEmpty()){
-            return new Pair<>(-1, -1);
-        }
-        Random rand = new Random();
-        return placedPieces.get(rand.nextInt(placedPieces.size()));
-    }
 }
