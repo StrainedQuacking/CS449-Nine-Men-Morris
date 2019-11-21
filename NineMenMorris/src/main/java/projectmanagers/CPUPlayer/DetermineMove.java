@@ -7,10 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static main.java.projectmanagers.CPUPlayer.AI.NO_PLACE;
 import static main.java.projectmanagers.logic.GameStatuses.ColorStatus;
-import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.EMPTY;
-import static main.java.projectmanagers.trackers.PlayerTracking.PLAYER_LOOKUP;
+import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.BLUE;
+import static main.java.projectmanagers.logic.GameStatuses.NO_PLACE;
 
 public class DetermineMove {
     static Pair<Integer, Integer> placementMills(ColorStatus color) {
@@ -22,7 +21,7 @@ public class DetermineMove {
         List<Pair<Integer, Integer>> closeToMill = new ArrayList<>();
 
         for (Pair<Integer, Integer> position : positions) {
-            if ((Board.isPositionCloseToMilled(position.getKey(), position.getValue())).equals(color)) {
+            if ((Board.isPositionCloseToMilled(position)).getKey().equals(color)) {
                 closeToMill.add(position);
             }
         }
@@ -36,15 +35,17 @@ public class DetermineMove {
     }
 
     static Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> movementMills(ColorStatus color) {
-        List<Pair<Integer, Integer>> positions = PLAYER_LOOKUP.get(color).getPlacedPieces();
+        List<Pair<Integer, Integer>> positions = Board.getEmptyPieces();
 
         for (Pair<Integer, Integer> position : positions) {
-            List<Pair<Integer, Integer>> adjacents = Board.adjacentPieces(position.getKey(), position.getValue());
+            Pair<ColorStatus, List<Pair<Integer, Integer>>> millInfo = Board.isPositionCloseToMilled(position);
 
-            for (Pair<Integer, Integer> adjacent : adjacents) {
-                if ((Board.isPositionCloseToMilled(adjacent.getKey(), adjacent.getValue())).equals(color)) {
-                    if (!(Board.isPositionCloseToMilled(position.getKey(), position.getValue())).equals(EMPTY)) {
-                        return new Pair<>(position, adjacent);
+            if (millInfo.getKey().equals(color)) {
+                List<Pair<Integer, Integer>> adjacents = Board.adjacentPieces(position.getKey(), position.getValue());
+
+                for (Pair<Integer, Integer> adjacent : adjacents) {
+                    if (Board.position(adjacent).equals(BLUE) && !millInfo.getValue().contains(adjacent)) {
+                        return new Pair<>(adjacent, position);
                     }
                 }
             }

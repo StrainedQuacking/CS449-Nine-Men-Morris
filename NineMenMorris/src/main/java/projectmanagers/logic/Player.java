@@ -71,4 +71,14 @@ public class Player {
         placedPieces.remove(new Pair<>(xpos, ypos));
     }
 
+    public boolean allPiecesMilled() {
+        int counter = 0;
+        for (Pair<Integer, Integer> position : placedPieces) {
+            if (Board.isPositionMilled(position.getKey(), position.getValue())) {
+                counter++;
+            }
+        }
+        return (counter == placedPieces.size());
+    }
+
 }

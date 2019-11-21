@@ -10,14 +10,12 @@ import java.util.Random;
 
 import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.*;
 
+import static main.java.projectmanagers.logic.GameStatuses.NO_PLACE;
 import static main.java.projectmanagers.trackers.PlayerTracking.BLUE_PLAYER;
 import static main.java.projectmanagers.trackers.PlayerTracking.RED_PLAYER;
 import static main.java.projectmanagers.trackers.PlayerTracking.*;
 
 public class AI {
-
-
-    static public Pair<Integer, Integer> NO_PLACE = new Pair<>(-1, -1);
   
     static public Pair<Integer, Integer> AIPlacePiece() {
 
@@ -143,7 +141,7 @@ public class AI {
 
             if (BLUE_PLAYER.getPieces() > 3) {
                 for (Pair<Integer, Integer> pair : adjacent) {
-                    if (Board.position(pair.getKey(), pair.getValue()) == EMPTY) {
+                    if (Board.position(pair).equals(EMPTY)) {
                         hasEmpty = true;
                     }
                 }
@@ -160,7 +158,7 @@ public class AI {
             adjacent = Board.adjacentPieces(currentPosition.getKey(), currentPosition.getValue());
 
             for (Pair<Integer, Integer> pair : adjacent) {
-                if (Board.position(pair.getKey(), pair.getValue()) == EMPTY) {
+                if (Board.position(pair).equals(EMPTY)) {
                     newPosition = pair;
                     break;
                 }
@@ -173,6 +171,8 @@ public class AI {
 
     static public Pair<Integer, Integer> AIRemovePiece() {
 
+        Pair<Integer, Integer> removal =  NO_PLACE;
+
         //If my opponent has a potential mill, remove that piece
 
         //MAYBE: else if my opponent is two moves away from a potential mill, remove that piece
@@ -180,27 +180,32 @@ public class AI {
         //else, remove a random piece of my opponents
         List<Pair<Integer, Integer>> enemyPieces = RED_PLAYER.getPlacedPieces();
         for (Pair<Integer, Integer> piece : enemyPieces) {
-            if ((Board.isPositionCloseToMilled(piece.getKey(), piece.getValue())).equals(EMPTY)) {
-                return piece;
+            if ((Board.isPositionCloseToMilled(piece)).getKey().equals(RED)) {
+                removal = piece;
             }
         }
 
-        return getRandom(RED);
+        if (RED_PLAYER.allPiecesMilled()){
+            removal = getRandom(RED);
+        } else {
+            for (Pair<Integer, Integer> piece : RED_PLAYER.getPlacedPieces()) {
+                if (!Board.isPositionMilled(piece.getKey(), piece.getValue())){
+                    removal = piece;
+                }
+            }
+        }
+        return removal;
     }
 
     static public Pair<Integer, Integer> getRandom(GameStatuses.ColorStatus color) {
-
         Random rand = new Random();
-        int randInt = 0;
-
+        List<Pair<Integer, Integer>> piecesList = new ArrayList<>();
         if (color.equals(EMPTY)) {
-            randInt = rand.nextInt(Board.getEmptyPieces().size());
-            return Board.getEmptyPieces().get(randInt);
+            piecesList = Board.getEmptyPieces();
         } else {
-            List<Pair<Integer, Integer>> piecesList = PLAYER_LOOKUP.get(color).getPlacedPieces();
-            randInt = rand.nextInt(piecesList.size());
-            return piecesList.get(randInt);
+            piecesList = PLAYER_LOOKUP.get(color).getPlacedPieces();
         }
-
+        return piecesList.get(rand.nextInt(piecesList.size()));
     }
+
 }
