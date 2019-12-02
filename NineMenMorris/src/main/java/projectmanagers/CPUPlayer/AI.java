@@ -11,14 +11,13 @@ import java.util.Random;
 import static main.java.projectmanagers.logic.GameStatuses.ColorStatus.*;
 
 import static main.java.projectmanagers.logic.GameStatuses.NO_PLACE;
-import static main.java.projectmanagers.logic.GameStatuses.getGamePlay;
 import static main.java.projectmanagers.trackers.PlayerTracking.BLUE_PLAYER;
 import static main.java.projectmanagers.trackers.PlayerTracking.RED_PLAYER;
 import static main.java.projectmanagers.trackers.PlayerTracking.*;
 
 public class AI {
 
-    static private GameStatuses.GameDifficulty gameDiff;
+    static public GameStatuses.GameDifficulty gameDiff;
 
     static Random rand = new Random();
     static int randDiff;
