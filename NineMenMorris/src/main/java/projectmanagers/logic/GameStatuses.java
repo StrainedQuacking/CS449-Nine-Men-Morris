@@ -19,7 +19,7 @@ public class GameStatuses {
 
     public enum TurnsEnum {PLAYER1, PLAYER2, MENU}
 
-    public enum GameDifficulty {BEGINNER, EASY, MEDIUM}
+    public enum GameDifficulty {EASY, MEDIUM, HARD}
 
     public static TurnsEnum turn = TurnsEnum.MENU;
 
