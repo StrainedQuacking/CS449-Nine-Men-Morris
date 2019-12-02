@@ -75,15 +75,29 @@ public class GameBoardGui extends JFrame {
         buttonPanel.add(twoPlay);
         buttonPanel.add(reset);
         onePlay.addActionListener(actionEvent -> {
-            JLabel label = new JLabel("Who goes first?");
+            JLabel first = new JLabel("Who goes first?");
             JRadioButton red = new JRadioButton("Player 1");
             red.setSelected(true);
             JRadioButton blue = new JRadioButton("CPU");
+            JLabel diff = new JLabel("Select difficulty:");
+            JRadioButton easy = new JRadioButton("Easy");
+            easy.setSelected(true);
+            JRadioButton medium = new JRadioButton("Medium");
+            JRadioButton hard = new JRadioButton("Hard");
             JPanel choice = new JPanel();
-            ButtonGroup group = new ButtonGroup();
-            group.add(red);     group.add(blue);
-            choice.add(label);  choice.add(red);    choice.add(blue);
+            choice.setLayout(new BorderLayout());
+            ButtonGroup firstGroup = new ButtonGroup();
+            ButtonGroup diffGroup = new ButtonGroup();
+            firstGroup.add(red);     firstGroup.add(blue);
+            diffGroup.add(easy);     diffGroup.add(medium); diffGroup.add(hard);
+
+            JPanel pPanel = new JPanel();   JPanel dPanel = new JPanel();
+            pPanel.add(first);  pPanel.add(red);    pPanel.add(blue);
+            dPanel.add(diff);   dPanel.add(easy);   dPanel.add(medium); dPanel.add(hard);
+
+            choice.add(pPanel, BorderLayout.NORTH);     choice.add(dPanel, BorderLayout.SOUTH);
             JOptionPane.showMessageDialog(null, choice, "Single player game", JOptionPane.QUESTION_MESSAGE);
+            //set who plays first
             if(red.isSelected())
                 GameStatuses.turn = GameStatuses.TurnsEnum.PLAYER1;
             else {
@@ -91,6 +105,14 @@ public class GameBoardGui extends JFrame {
                 gamePanel.cpuAddPiece(pair);
                 GameStatuses.turn = GameStatuses.TurnsEnum.PLAYER2;
             }
+            // set the difficulty
+            if(easy.isSelected())
+                AI.gameDiff = GameStatuses.GameDifficulty.EASY;
+            else if(medium.isSelected())
+                AI.gameDiff = GameStatuses.GameDifficulty.MEDIUM;
+            else
+                AI.gameDiff = GameStatuses.GameDifficulty.HARD;
+            
             player2Panel.player2Txt.setText("  CPU   ");
             gameType = GameStatuses.GameType.SINGLE_PLAYER;
             showTurn();
