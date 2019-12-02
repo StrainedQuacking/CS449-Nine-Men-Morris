@@ -27,7 +27,7 @@ public class AI {
         randDiff = rand.nextInt(2);
         Pair<Integer, Integer> myPiece;
 
-        if (gameDiff != GameStatuses.GameDifficulty.EASY && (gameDiff == GameStatuses.GameDifficulty.MEDIUM && randDiff == 1)) {
+        if ((gameDiff == GameStatuses.GameDifficulty.MEDIUM && randDiff == 1) || gameDiff == GameStatuses.GameDifficulty.HARD) {
             if (GameStatuses.turnCounter == 1)
                 return new Pair<>(0, 0);
             else if (GameStatuses.turnCounter == 2) {
@@ -62,7 +62,7 @@ public class AI {
 
         randDiff = rand.nextInt(2);
 
-        if (gameDiff != GameStatuses.GameDifficulty.EASY && (gameDiff == GameStatuses.GameDifficulty.MEDIUM && randDiff == 1)) {
+        if ((gameDiff == GameStatuses.GameDifficulty.MEDIUM && randDiff == 1) || gameDiff == GameStatuses.GameDifficulty.HARD) {
             Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> currNew = DetermineMove.movementMills(BLUE);
             if (!(currNew.getKey().equals(NO_PLACE))) {
                 return currNew;
@@ -115,7 +115,7 @@ public class AI {
 
         Pair<Integer, Integer> removal =  NO_PLACE;
 
-        if (gameDiff != GameStatuses.GameDifficulty.EASY && (gameDiff == GameStatuses.GameDifficulty.MEDIUM && randDiff == 1)) {
+        if ((gameDiff == GameStatuses.GameDifficulty.MEDIUM && randDiff == 1) || gameDiff == GameStatuses.GameDifficulty.HARD) {
 
             List<Pair<Integer, Integer>> enemyPieces = RED_PLAYER.getPlacedPieces();
             for (Pair<Integer, Integer> piece : enemyPieces) {
