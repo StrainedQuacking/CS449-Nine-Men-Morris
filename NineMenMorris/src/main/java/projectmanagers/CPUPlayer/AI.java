@@ -45,16 +45,14 @@ public class AI {
             if (myPiece.equals(NO_PLACE)) {
                 myPiece = DetermineMove.placementMills(RED);
             }
-            return myPiece;
-
-        }
-            // Basic mill placing or Random piece
-            myPiece = DetermineMove.placementMills(BLUE);
             if (myPiece.equals(NO_PLACE)) {
                 return getRandom(EMPTY);
             }
             return myPiece;
 
+        }
+
+        return getRandom(EMPTY);
 
     }
 
